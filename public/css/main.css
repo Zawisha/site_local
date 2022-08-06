@@ -1,0 +1,66 @@
+.back_img {
+    /*background-image:url('/bear.jpeg');*/
+
+    background-attachment: fixed, fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.img_body {
+
+}
+.register_button {
+    margin-left: 20px;
+}
+.login_container {
+    margin-top: 120px;
+}
+.login_register_form_container {
+    margin-top: 40px;
+}
+.post_back {
+    text-align: left;
+   margin-top: 10px;
+}
+.textarea_admin {
+    margin-top: 6px;
+}
+.alert_mes {
+    margin-top: 10px;
+}
+.top_button_menu {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.menu_row {
+    margin-bottom: 6px;
+}
+.cont_wrap {
+    margin-bottom: 30px;
+}
+.admin_phones {
+    padding-bottom: 10px;
+}
+.cust_button {
+    margin-right: 20px;
+    background-color: #113049;
+}
+.cust_button_add {
+    background-color: #e9605c;
+
+}
+.vk_list_text {
+    color: #1d68a7;
+}
+.invite_users {
+    margin-top: 30px;
+}
+.bottom_Vk {
+    margin-bottom: 20px;
+}
+.vk_butt {
+    margin-top: 20px;
+}
+.us_show_list {
+    margin-top: 10px;
+}

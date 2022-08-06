@@ -1,0 +1,260 @@
+Logger, zawisha:         	Automatically truncated logfile to 1048576
+MsgIdHandler64, zawisha: 	Given message id (7128680288600144897) is bigger than or equal to the current limit (7128680288600131585). Please sync your date using NTP.
+Session, zawisha:        	Garbage collected 13 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 13 outgoing messages, 0 left
+MsgIdHandler64, zawisha: 	Given message id (7128680419038472193) is bigger than or equal to the current limit (7128680419038456833). Please sync your date using NTP.
+Session, zawisha:        	Garbage collected 13 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 13 outgoing messages, 0 left
+Server, zawisha:         	Exception in IPC connection: Amp\Ipc\Sync\ChannelException: The channel closed unexpectedly. Did the context die? in /home/andrei/apache_server/test_irk/vendor/danog/ipc/lib/Sync/ChannelledStream.php:72
+Stack trace:
+#0 [internal function]: Amp\Ipc\Sync\ChannelledStream->Amp\Ipc\Sync\{closure}()
+#1 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Coroutine.php(118): Generator->send()
+#2 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Internal/Placeholder.php(149): Amp\Coroutine->Amp\{closure}()
+#3 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Deferred.php(53): Amp\Promise@anonymous->resolve()
+#4 /home/andrei/apache_server/test_irk/vendor/amphp/byte-stream/lib/ResourceInputStream.php(101): Amp\Deferred->resolve()
+#5 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop/NativeDriver.php(327): Amp\ByteStream\ResourceInputStream::Amp\ByteStream\{closure}()
+#6 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop/NativeDriver.php(127): Amp\Loop\NativeDriver->selectStreams()
+#7 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop/Driver.php(138): Amp\Loop\NativeDriver->dispatch()
+#8 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop/Driver.php(72): Amp\Loop\Driver->tick()
+#9 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop.php(95): Amp\Loop\Driver->run()
+#10 /home/andrei/apache_server/test_irk/vendor/danog/madelineproto/src/danog/MadelineProto/Tools.php(296): Amp\Loop::run()
+#11 /home/andrei/apache_server/test_irk/vendor/danog/madelineproto/src/danog/MadelineProto/Ipc/Runner/entry.php(110): danog\MadelineProto\Tools::wait()
+#12 /home/andrei/apache_server/test_irk/vendor/danog/madelineproto/src/danog/MadelineProto/Ipc/Runner/entry.php(134): {closure}()
+#13 {main}
+SessionPaths, zawisha:   	Waiting for exclusive lock of /home/andrei/apache_server/test_irk/public/my_mad_sessions/+375298684190/session.madeline.safe.php.lock...
+SessionPaths, zawisha:   	Got exclusive lock of /home/andrei/apache_server/test_irk/public/my_mad_sessions/+375298684190/session.madeline.safe.php.lock...
+SessionPaths, zawisha:   	Waiting for exclusive lock of /home/andrei/apache_server/test_irk/public/my_mad_sessions/+375298684190/session.madeline.lightState.php.lock...
+SessionPaths, zawisha:   	Got exclusive lock of /home/andrei/apache_server/test_irk/public/my_mad_sessions/+375298684190/session.madeline.lightState.php.lock...
+APIWrapper, zawisha:     	Saved session!
+UpdateHandler, zawisha:  	Parsing updates (updateShort) received via the socket...
+FeedLoop, zawisha:       	Resumed update feed loop generic
+Session, zawisha:        	Garbage collected 2 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 2 outgoing messages, 0 left
+MsgIdHandler64, zawisha: 	Given message id (7128680548569695233) is bigger than or equal to the current limit (7128680548569676801). Please sync your date using NTP.
+Session, zawisha:        	Garbage collected 12 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 11 outgoing messages, 1 left
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 1 outgoing messages, 0 left
+ReadLoop, zawisha:       	danog\MadelineProto\NothingInTheSocketException in /home/andrei/apache_server/test_irk/vendor/danog/madelineproto/src/danog/MadelineProto/Stream/Common/BufferedRawStream.php:180
+Stack trace:
+#0 [internal function]: danog\MadelineProto\Stream\Common\BufferedRawStream->bufferReadGenerator()
+#1 /home/andrei/apache_server/test_irk/vendor/danog/madelineproto/src/danog/MadelineProto/Coroutine.php(117): Generator->send()
+#2 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Internal/Placeholder.php(149): danog\MadelineProto\Coroutine->danog\MadelineProto\{closure}()
+#3 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Deferred.php(53): Amp\Promise@anonymous->resolve()
+#4 /home/andrei/apache_server/test_irk/vendor/amphp/byte-stream/lib/ResourceInputStream.php(101): Amp\Deferred->resolve()
+#5 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop/NativeDriver.php(327): Amp\ByteStream\ResourceInputStream::Amp\ByteStream\{closure}()
+#6 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop/NativeDriver.php(127): Amp\Loop\NativeDriver->selectStreams()
+#7 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop/Driver.php(138): Amp\Loop\NativeDriver->dispatch()
+#8 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop/Driver.php(72): Amp\Loop\Driver->tick()
+#9 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop.php(95): Amp\Loop\Driver->run()
+#10 /home/andrei/apache_server/test_irk/vendor/danog/madelineproto/src/danog/MadelineProto/Tools.php(296): Amp\Loop::run()
+#11 /home/andrei/apache_server/test_irk/vendor/danog/madelineproto/src/danog/MadelineProto/Ipc/Runner/entry.php(110): danog\MadelineProto\Tools::wait()
+#12 /home/andrei/apache_server/test_irk/vendor/danog/madelineproto/src/danog/MadelineProto/Ipc/Runner/entry.php(134): {closure}()
+#13 {main}
+ReadLoop, zawisha:       	Got nothing in the socket in DC 3.0, reconnecting...
+Connection, zawisha:     	Reconnecting DC 3.0
+Connection, zawisha:     	Disconnecting from DC 3.0
+Connection, zawisha:     	Disconnected from DC 3.0
+DataCenter, zawisha:     	Reconnecting to DC 3 (0) from existing
+DataCenterConnection, zawisha: 	Trying shared connection via tcp://149.154.175.100:443 main DC 3, via ipv4 using AbridgedStream => BufferedRawStream => DefaultStream (0)
+Connection, zawisha:     	Connecting to DC 3.0
+Connection, zawisha:     	Connected to DC 3.0!
+DataCenter, zawisha:     	OK!
+Session, zawisha:        	Garbage collected 4 outgoing messages, 11 left
+MsgIdHandler64, zawisha: 	Given message id (7128680678266354689) is bigger than or equal to the current limit (7128680678266337281). Please sync your date using NTP.
+Session, zawisha:        	Garbage collected 13 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 11 outgoing messages, 0 left
+UpdateHandler, zawisha:  	Parsing updates (updateShort) received via the socket...
+FeedLoop, zawisha:       	Resumed update feed loop generic
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+UpdateHandler, zawisha:  	Parsing updates (updateShort) received via the socket...
+FeedLoop, zawisha:       	Resumed update feed loop generic
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+MsgIdHandler64, zawisha: 	Given message id (7128680807707048961) is bigger than or equal to the current limit (7128680807707035649). Please sync your date using NTP.
+Session, zawisha:        	Garbage collected 13 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 13 outgoing messages, 0 left
+ReadLoop, zawisha:       	danog\MadelineProto\NothingInTheSocketException in /home/andrei/apache_server/test_irk/vendor/danog/madelineproto/src/danog/MadelineProto/Stream/Common/BufferedRawStream.php:180
+Stack trace:
+#0 [internal function]: danog\MadelineProto\Stream\Common\BufferedRawStream->bufferReadGenerator()
+#1 /home/andrei/apache_server/test_irk/vendor/danog/madelineproto/src/danog/MadelineProto/Coroutine.php(117): Generator->send()
+#2 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Internal/Placeholder.php(149): danog\MadelineProto\Coroutine->danog\MadelineProto\{closure}()
+#3 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Deferred.php(53): Amp\Promise@anonymous->resolve()
+#4 /home/andrei/apache_server/test_irk/vendor/amphp/byte-stream/lib/ResourceInputStream.php(101): Amp\Deferred->resolve()
+#5 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop/NativeDriver.php(327): Amp\ByteStream\ResourceInputStream::Amp\ByteStream\{closure}()
+#6 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop/NativeDriver.php(127): Amp\Loop\NativeDriver->selectStreams()
+#7 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop/Driver.php(138): Amp\Loop\NativeDriver->dispatch()
+#8 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop/Driver.php(72): Amp\Loop\Driver->tick()
+#9 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop.php(95): Amp\Loop\Driver->run()
+#10 /home/andrei/apache_server/test_irk/vendor/danog/madelineproto/src/danog/MadelineProto/Tools.php(296): Amp\Loop::run()
+#11 /home/andrei/apache_server/test_irk/vendor/danog/madelineproto/src/danog/MadelineProto/Ipc/Runner/entry.php(110): danog\MadelineProto\Tools::wait()
+#12 /home/andrei/apache_server/test_irk/vendor/danog/madelineproto/src/danog/MadelineProto/Ipc/Runner/entry.php(134): {closure}()
+#13 {main}
+ReadLoop, zawisha:       	Got nothing in the socket in DC 3.0, reconnecting...
+Connection, zawisha:     	Reconnecting DC 3.0
+Connection, zawisha:     	Disconnecting from DC 3.0
+Connection, zawisha:     	Disconnected from DC 3.0
+DataCenter, zawisha:     	Reconnecting to DC 3 (0) from existing
+DataCenterConnection, zawisha: 	Trying shared connection via tcp://149.154.175.100:443 main DC 3, via ipv4 using AbridgedStream => BufferedRawStream => DefaultStream (0)
+Connection, zawisha:     	Connecting to DC 3.0
+MsgIdHandler64, zawisha: 	Given message id (7128680937114293249) is bigger than or equal to the current limit (7128680937114283009). Please sync your date using NTP.
+Connection, zawisha:     	Connected to DC 3.0!
+DataCenter, zawisha:     	OK!
+Session, zawisha:        	Garbage collected 13 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 13 outgoing messages, 0 left
+MsgIdHandler64, zawisha: 	Given message id (7128681066367349761) is bigger than or equal to the current limit (7128681066367340545). Please sync your date using NTP.
+Session, zawisha:        	Garbage collected 13 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 13 outgoing messages, 0 left
+[06-Aug-2022 08:43:36 UTC] Enabled PHP logging
+[06-Aug-2022 08:43:37 UTC] Enabled PHP logging
+[06-Aug-2022 08:43:37 UTC] Enabled PHP logging
+MTProto, zawisha:        	Accepted IPC client connection!
+Session, zawisha:        	Garbage collected 1 outgoing messages, 1 left
+Files, zawisha:          	Upload status: 100%
+Files, zawisha:          	Total upload time: 0.24270009994507
+Files, zawisha:          	Total upload speed: 3.664275 mbps
+ReferenceDatabase, zawisha: 	Trying to add reference out of context, report the following message to @danogentili!
+ReferenceDatabase, zawisha: 	null
+Files, zawisha:          	Upload status: 100%
+Files, zawisha:          	Total upload time: 0.27283310890198
+Files, zawisha:          	Total upload speed: 3.412577 mbps
+ReferenceDatabase, zawisha: 	Trying to add reference out of context, report the following message to @danogentili!
+ReferenceDatabase, zawisha: 	null
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 1 outgoing messages, 0 left
+Session, zawisha:        	Garbage collected 1 outgoing messages, 1 left
+Session, zawisha:        	Garbage collected 2 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 4 outgoing messages, 0 left
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 2 outgoing messages, 0 left
+Files, zawisha:          	Upload status: 100%
+Files, zawisha:          	Total upload time: 0.31507897377014
+Files, zawisha:          	Total upload speed: 2.840583 mbps
+ReferenceDatabase, zawisha: 	Trying to add reference out of context, report the following message to @danogentili!
+ReferenceDatabase, zawisha: 	null
+Files, zawisha:          	Upload status: 100%
+Files, zawisha:          	Total upload time: 0.30996799468994
+Files, zawisha:          	Total upload speed: 2.905125 mbps
+ReferenceDatabase, zawisha: 	Trying to add reference out of context, report the following message to @danogentili!
+ReferenceDatabase, zawisha: 	null
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 1 outgoing messages, 0 left
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 2 outgoing messages, 0 left
+Session, zawisha:        	Garbage collected 1 outgoing messages, 1 left
+Session, zawisha:        	Garbage collected 2 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 4 outgoing messages, 0 left
+Files, zawisha:          	Upload status: 100%
+Files, zawisha:          	Total upload time: 0.2961859703064
+Files, zawisha:          	Total upload speed: 2.62562 mbps
+ReferenceDatabase, zawisha: 	Trying to add reference out of context, report the following message to @danogentili!
+ReferenceDatabase, zawisha: 	null
+Files, zawisha:          	Upload status: 100%
+Files, zawisha:          	Total upload time: 0.25427317619324
+Files, zawisha:          	Total upload speed: 2.808507 mbps
+ReferenceDatabase, zawisha: 	Trying to add reference out of context, report the following message to @danogentili!
+ReferenceDatabase, zawisha: 	null
+Files, zawisha:          	Upload status: 100%
+Files, zawisha:          	Total upload time: 0.25127696990967
+Files, zawisha:          	Total upload speed: 2.736167 mbps
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 2 outgoing messages, 0 left
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 1 outgoing messages, 0 left
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 2 outgoing messages, 0 left
+Session, zawisha:        	Garbage collected 2 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 5 outgoing messages, 1 left
+ReferenceDatabase, zawisha: 	Trying to add reference out of context, report the following message to @danogentili!
+ReferenceDatabase, zawisha: 	null
+Files, zawisha:          	Upload status: 100%
+Files, zawisha:          	Total upload time: 0.30592203140259
+Files, zawisha:          	Total upload speed: 3.886114 mbps
+ReferenceDatabase, zawisha: 	Trying to add reference out of context, report the following message to @danogentili!
+ReferenceDatabase, zawisha: 	null
+Files, zawisha:          	Upload status: 100%
+Files, zawisha:          	Total upload time: 0.21542406082153
+Files, zawisha:          	Total upload speed: 2.904076 mbps
+ReferenceDatabase, zawisha: 	Trying to add reference out of context, report the following message to @danogentili!
+ReferenceDatabase, zawisha: 	null
+MTProto, zawisha:        	Accepted IPC callback connection, assigning ID 4!
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 2 outgoing messages, 0 left
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 2 outgoing messages, 0 left
+Session, zawisha:        	Garbage collected 3 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 5 outgoing messages, 0 left
+UpdateHandler, zawisha:  	Parsing updates (updates) received via the socket...
+SeqLoop, zawisha:        	Was fed updates of type updates...
+FeedLoop, zawisha:       	Resumed update feed loop generic
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 2 outgoing messages, 0 left
+UpdateHandler, zawisha:  	Parsing updates (updateShort) received via the socket...
+FeedLoop, zawisha:       	Resumed update feed loop generic
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+UpdateHandler, zawisha:  	Parsing updates (updates) received via the socket...
+SeqLoop, zawisha:        	Was fed updates of type updates...
+FeedLoop, zawisha:       	Resumed update feed loop generic
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+UpdateHandler, zawisha:  	Parsing updates (updates) received via the socket...
+SeqLoop, zawisha:        	Was fed updates of type updates...
+FeedLoop, zawisha:       	Resumed update feed loop generic
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+UpdateHandler, zawisha:  	Parsing updates (updates) received via the socket...
+SeqLoop, zawisha:        	Was fed updates of type updates...
+FeedLoop, zawisha:       	Resumed update feed loop generic
+MsgIdHandler64, zawisha: 	Given message id (7128681195821583361) is bigger than or equal to the current limit (7128681195821562881). Please sync your date using NTP.
+Session, zawisha:        	Garbage collected 14 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 12 outgoing messages, 0 left
+UpdateHandler, zawisha:  	Parsing updates (updates) received via the socket...
+SeqLoop, zawisha:        	Was fed updates of type updates...
+FeedLoop, zawisha:       	Resumed update feed loop generic
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+UpdateHandler, zawisha:  	Parsing updates (updates) received via the socket...
+SeqLoop, zawisha:        	Was fed updates of type updates...
+FeedLoop, zawisha:       	Resumed update feed loop generic
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+UpdateHandler, zawisha:  	Parsing updates (updates) received via the socket...
+SeqLoop, zawisha:        	Was fed updates of type updates...
+FeedLoop, zawisha:       	Resumed update feed loop generic
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+UpdateHandler, zawisha:  	Parsing updates (updates) received via the socket...
+SeqLoop, zawisha:        	Was fed updates of type updates...
+FeedLoop, zawisha:       	Resumed update feed loop generic
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+UpdateHandler, zawisha:  	Parsing updates (updateShort) received via the socket...
+FeedLoop, zawisha:       	Resumed update feed loop generic
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+UpdateHandler, zawisha:  	Parsing updates (updateShort) received via the socket...
+FeedLoop, zawisha:       	Resumed update feed loop generic
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
+ReadLoop, zawisha:       	danog\MadelineProto\NothingInTheSocketException in /home/andrei/apache_server/test_irk/vendor/danog/madelineproto/src/danog/MadelineProto/Stream/Common/BufferedRawStream.php:180
+Stack trace:
+#0 [internal function]: danog\MadelineProto\Stream\Common\BufferedRawStream->bufferReadGenerator()
+#1 /home/andrei/apache_server/test_irk/vendor/danog/madelineproto/src/danog/MadelineProto/Coroutine.php(117): Generator->send()
+#2 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Internal/Placeholder.php(149): danog\MadelineProto\Coroutine->danog\MadelineProto\{closure}()
+#3 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Deferred.php(53): Amp\Promise@anonymous->resolve()
+#4 /home/andrei/apache_server/test_irk/vendor/amphp/byte-stream/lib/ResourceInputStream.php(101): Amp\Deferred->resolve()
+#5 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop/NativeDriver.php(327): Amp\ByteStream\ResourceInputStream::Amp\ByteStream\{closure}()
+#6 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop/NativeDriver.php(127): Amp\Loop\NativeDriver->selectStreams()
+#7 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop/Driver.php(138): Amp\Loop\NativeDriver->dispatch()
+#8 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop/Driver.php(72): Amp\Loop\Driver->tick()
+#9 /home/andrei/apache_server/test_irk/vendor/amphp/amp/lib/Loop.php(95): Amp\Loop\Driver->run()
+#10 /home/andrei/apache_server/test_irk/vendor/danog/madelineproto/src/danog/MadelineProto/Tools.php(296): Amp\Loop::run()
+#11 /home/andrei/apache_server/test_irk/vendor/danog/madelineproto/src/danog/MadelineProto/Ipc/Runner/entry.php(110): danog\MadelineProto\Tools::wait()
+#12 /home/andrei/apache_server/test_irk/vendor/danog/madelineproto/src/danog/MadelineProto/Ipc/Runner/entry.php(134): {closure}()
+#13 {main}
+ReadLoop, zawisha:       	Got nothing in the socket in DC 3.0, reconnecting...
+Connection, zawisha:     	Reconnecting DC 3.0
+Connection, zawisha:     	Disconnecting from DC 3.0
+Connection, zawisha:     	Disconnected from DC 3.0
+DataCenter, zawisha:     	Reconnecting to DC 3 (0) from existing
+DataCenterConnection, zawisha: 	Trying shared connection via tcp://149.154.175.100:443 main DC 3, via ipv4 using AbridgedStream => BufferedRawStream => DefaultStream (0)
+Connection, zawisha:     	Connecting to DC 3.0
+Connection, zawisha:     	Connected to DC 3.0!
+DataCenter, zawisha:     	OK!
+MsgIdHandler64, zawisha: 	Given message id (7128681325556291585) is bigger than or equal to the current limit (7128681325556271105). Please sync your date using NTP.
+Session, zawisha:        	Garbage collected 13 incoming messages, 0 left
+Session, zawisha:        	Garbage collected 13 outgoing messages, 0 left
+UpdateHandler, zawisha:  	Parsing updates (updateShort) received via the socket...
+FeedLoop, zawisha:       	Resumed update feed loop generic
+Session, zawisha:        	Garbage collected 1 incoming messages, 0 left
