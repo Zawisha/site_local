@@ -27,6 +27,7 @@ import VkComponent from './components/VkComponent'
 import VkSendComponent from './components/VkSendComponent'
 import VkMessageComponent from "./components/VkMessageComponent";
 import VkHandComponent from "./components/VkHandComponent";
+import ContentComponent from "./components/ContentComponent";
  // axios.defaults.baseURL = 'http://localhost:/api';
  axios.defaults.baseURL = 'http://site2.loc:/api';
 
@@ -38,6 +39,11 @@ const router = new VueRouter({
             path: '/',
             name: 'main',
             component: Main
+        },
+        {
+            path: '/content',
+            name: 'content',
+            component: ContentComponent
         },
         {
             path: '/vk_hand',

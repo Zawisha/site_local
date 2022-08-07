@@ -143,7 +143,7 @@
                                 inp.push({
                                     id:entry.id,
                                     group_id:entry.group_id,
-                                    technology_id:entry.technology_id,
+                                    technology_id:entry.technology,
                                     last_post:entry.last_post
                                 });
                             })

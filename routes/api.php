@@ -74,6 +74,7 @@ Route::post('/send_inv_message_second', [\App\Http\Controllers\VkController::cla
 Route::post('/showVKusers', [\App\Http\Controllers\VkController::class, 'showVKusers']);
 Route::post('/deleteshowVKusers', [\App\Http\Controllers\VkController::class, 'deleteshowVKusers']);
 Route::post('/get_vk_text_buy', [\App\Http\Controllers\VkController::class, 'get_vk_text_buy']);
+Route::post('/get_list_content_group', [\App\Http\Controllers\VkController::class, 'get_list_content_group']);
 
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();

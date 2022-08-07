@@ -21,18 +21,28 @@ class VkController extends Controller
     use AuthMaddellineTrait;
     public function send_to_telegram(Request $request)
     {
-        //обязательно перезагрузка апача
-        set_time_limit(20);
-//        Storage::append('/logVK.txt', '1');
         //очищаем папку
         $dir = './vk/';
         foreach(glob($dir.'*.*') as $v){
             unlink($v);
         }
-        $post_id = $request->input('post_id');
-        echo preg_match_all('#w=wall-([0-9]+)+_([0-9]+)+#', $post_id,  $matches);
-        $group_vk_number=$matches[1][0];
-        $post_vk_number=$matches[2][0];
+//        $post_id = $request->input('post_id');
+//        echo preg_match_all('#w=wall-([0-9]+)+_([0-9]+)+#', $post_id,  $matches);
+//        $group_vk_number=$matches[1][0];
+//        $post_vk_number=$matches[2][0];
+        $group_vk_number=$request->input('group_vk_number');
+        //удаляем минус
+        $group_vk_number = substr($group_vk_number, 1);
+        $post_vk_number=$request->input('post_vk_number');
+        $group_post_last=VkSearchGroup::where('group_id',$group_vk_number)->get('last_post');
+        //проверка на то что новый пост будет новее чем тот что уже был
+        if($group_post_last[0]->last_post>$post_vk_number)
+        {
+            return response()->json([
+                'status' => 'not success',
+                'todo'    => 'Был уже такой пост',
+            ], 200);
+        }
         $telegram_channels_list = VKGroups::where('vk_group_id','=',$group_vk_number)->where('in_work','=','1')->get('telegram_channel');
         //получаем пост
         try {
@@ -45,27 +55,9 @@ class VkController extends Controller
                 'todo'    => 'get post error',
             ], 200);
         }
+        sleep(1);
         //получаем текст
         $post_text=$xml->response['0']->text;
-        //$post_text=trim($post_text);
-        $post_text='Хендай тибурон
-Мотор 2.7, полностью был обслужен три-четыре месяца назад (масло поменяли на этой неделе с фильтрами) коробка отлично, не пинается, переключает плавно без ударов. Тихий выхлоп, перфорируемые тормозные диски с теплоотводами
-';
-//        $post_text1='
-//Хендай тибурон
-//Мотор 2.7, полностью был обслужен три-четыре месяца назад (масло поменяли на этой неделе с фильтрами) коробка отлично, не пинается, переключает плавно без ударов. Тихий выхлоп, перфорируемые тормозные диски с теплоотводами
-//Возможен обмен, на авто дороже, возможна доплата с моей стороны
-//Авто на полном ходу , доки чистые , никаких штрафов и запретов
-//По плюшкам: автозапуск , 2din магнитола sonу с камерой заднего вида
-//С учетом проблем не будет
-//Небольшие проблемы по лкп, но ничего критичного. Дыр гнили нет и не ожидается
-//
-//Торг только у капота (по телефону и смс не торгуюсь)
-//
-//333.000р
-//Тверь';
-//        Storage::append('/logVK.txt', $post_text);
-//        Storage::append('/logVK.txt', $post_text1);
         //сохраняем фото
         $photo_urls=[];
         foreach ($xml->response['0']->attachments as $attach)
@@ -167,42 +159,26 @@ class VkController extends Controller
                             'time' => $schedule_date,
                         ]);
                     }
-                    try {
-
                     $MadelineProto->messages->sendMultiMedia([
                             'peer' => $telegram_channel['telegram_channel'],
                             'multi_media' => $inputSingleMediaGlobal,
                             'schedule_date'=>$schedule_date
-                        ]);
-                    return response()->json([
-                            'status' => 'success',
-                            'todo'    => 'success',
-                        ], 200);
-                    }
-                    catch (\Throwable $e)
-                    {
-
-                        OldPostVk::create([
-                            'post' => $group_vk_number.'_'.$post_vk_number,
-                            'telegram_channel' => $telegram_channel['telegram_channel'],
-                        ]);
-                        return response()->json([
-                            'status' => 'not success',
-                            'todo'    => 'send telegram error',
-                        ], 200);
-                    }
-                    return response()->json([
-                        'status' => 'success',
-                        'todo'    => 'success',
-                    ], 200);
+                        ]
+                   );
+                    $MadelineProto->stop();
+                    sleep(1);
                 }
-
             }
+        VkSearchGroup::where('group_id',$group_vk_number)->
+        update([
+            'last_post' => $post_vk_number,
+        ]);
         return response()->json([
-                    'status' => 'success',
-                    'todo'    => 'success',
-                ], 200);
+            'status' => 'success',
+            'todo'    => 'success',
+        ], 200);
     }
+
     public function add_vk_group_to_channel(Request $request)
     {
         $vk_group = trim($request->input('vk_group'));
@@ -460,6 +436,7 @@ class VkController extends Controller
 
     public function getVKusers(Request $request)
     {
+        //УБРАТЬ ЧУЖИЕ ПОСТЫ
 //        $post_id = $request->input('post_id');
 //        echo preg_match_all('#w=wall-([0-9]+)+_([0-9]+)+#', $post_id,  $matches);
 //        $group_vk_number=$matches[1][0];
@@ -559,10 +536,10 @@ class VkController extends Controller
                     update([
                         'last_post' => $post->id,
                     ]);
-                    VkSearchGroup::where('group_id',$group_id)->
-                    update([
-                        'last_post' => $post->id,
-                    ]);
+//                    VkSearchGroup::where('group_id',$group_id)->
+//                    update([
+//                        'last_post' => $post->id,
+//                    ]);
                 }
             }
       $count_users= VKUsersSend::where('technology_id',$technology_id)->where('message_number','0')->where('is_closed','0')->count();
@@ -611,7 +588,8 @@ class VkController extends Controller
     }
     public function get_list_of_search_group(Request $request)
     {
-        $groups=VkSearchGroup::all();
+        //VK posts для поиска юзеров
+        $groups=VKPosts::all();
         return response()->json([
             'status' => 'success',
             'groups'    => $groups,
@@ -644,6 +622,73 @@ class VkController extends Controller
         ]);
         return response()->json([
             'message'    =>  'сделано',
+        ], 200);
+    }
+    public function get_list_content_group()
+    {
+        $final_result=[];
+        $groups=VkSearchGroup::all();
+        foreach ($groups as $group)
+        {
+        sleep(1);
+        try {
+            $xml = json_decode(file_get_contents("https://api.vk.com/method/wall.get?owner_id=-".$group['group_id']."&count=20&v=5.131&access_token=ebb4e240a677264ecf6de2ecfc9ab45a83a90c3773f309e92677ab19c624d132e9abe70e44d09a41cba59"));
+        }
+        catch (\Throwable $e)
+        {
+            return response()->json([
+                'status' => 'ошибка в получении списка постов группы',
+                'error'    =>  $e,
+                'group'    =>  $group_id,
+            ], 200);
+        }
+      //  $xml->response->items=array_reverse($xml->response->items);
+
+
+        $posts=[];
+        foreach ($xml->response->items as $post)
+        {
+           // return $post->attachments[0]->type;
+            $add_fl=1;
+            //убираем пост со ссылкой или на статью
+            if(isset($post->attachments))
+            {
+                //убираем закреплённый пост
+                //убираем пост с посмотреть объявление
+            if((isset($post->is_pinned))||($post->attachments[0]->type=='link')||(isset($post->copy_history)))
+            {
+                $add_fl=0;
+            }
+            }
+            else
+            {
+                $add_fl=0;
+            }
+            if($add_fl==1)
+            {
+                array_unshift($posts, $post);
+            }
+
+        }
+
+        $group_post_last=VkSearchGroup::where('group_id',$group['group_id'])->get('last_post');
+        foreach ($posts as $post)
+        {
+            //закреплённый пост не берём и смотрим чтобы пост был новее чем тот что я уже брал
+            if($post->id>$group_post_last[0]->last_post)
+            {
+                array_push($final_result,$post);
+
+//                VKPosts::where('group_id',$group_id)->
+//                update([
+//                    'last_post' => $post->id,
+//                ]);
+            }
+        }
+        }
+        return response()->json([
+            'status' => 'собрано',
+            'posts_list' =>$final_result,
         ], 200);
     }
 }

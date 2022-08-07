@@ -11,6 +11,7 @@
                   <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button vk_butt" v-on:click="go_to_vk_send()">Рассылка ВК и телега</button>
                   <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button vk_butt" v-on:click="go_to_vk_mes()">сообщения ВК</button>
                   <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button vk_butt" v-on:click="go_to_vk_hand()">сообщения ВК вручную</button>
+                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button vk_butt" v-on:click="go_to_content()">контент телеграм из ВК</button>
 <!--                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button" v-on:click="go_to_test()">test</button>-->
               </div>
           </div>
@@ -34,6 +35,10 @@ export default {
     created() {
     },
     methods: {
+        go_to_content()
+        {
+            Vue.router.push({name:'content'})
+        },
         go_to_vk_hand()
         {
             Vue.router.push({name:'vk_hand'})
