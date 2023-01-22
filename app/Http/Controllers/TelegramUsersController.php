@@ -8,14 +8,20 @@ use App\Models\GroupCounter;
 use App\Models\GroupNumber;
 use App\Models\LastUsers;
 use App\Models\TechList;
+use App\Models\TelegramInvite;
 use App\Models\TelegramPhones;
+use App\Models\UserForInvite;
 use danog\MadelineProto\API;
 use danog\Serializable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 //require_once 'madeline.php';
 use App\Traits\AuthMaddellineTrait;
-
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use danog\MadelineProto\Logger;
+use danog\MadelineProto\Settings\Logger as LoggerSettings;
+use GuzzleHttp\Client;
 
 class TelegramUsersController extends Controller
 {
@@ -130,6 +136,7 @@ class TelegramUsersController extends Controller
         $phone = $request->input('phone');
         $channel = $request->input('channel');
         $technology = $request->input('technology');
+
         if($phone=='')
         {
             return 'пустой телефон';
@@ -278,18 +285,18 @@ class TelegramUsersController extends Controller
 
                     $flag_exist=0;
 
-                    if (GeneralDev::where('user_id', $users['id'])->exists()) {
+                    if (UserForInvite::where('user_id', $users['id'])->exists()) {
                         $flag_exist=1;
                     }
                     if($users['username'] != 'NO')
                     {
-                        if (GeneralDev::where('username', $users['username'])->exists()) {
+                        if (UserForInvite::where('username', $users['username'])->exists()) {
                             $flag_exist=1;
                         }
                     }
                     if($flag_exist==0)
                     {
-                      $res=  GeneralDev::create([
+                      $res=  UserForInvite::create([
                             'user_id' => $users['id'],
                             'username' => $users['username'],
                             'technology_id' => $channel_all[$counter]['technology_id']
@@ -337,79 +344,328 @@ class TelegramUsersController extends Controller
 
     public function invite_users(Request $request)
     {
+
+// обновить версию maddelineproto, попробовать поставить через composer
         $phone = $request->input('phone');
         $group = $request->input('group');
-        $first_reg = $request->input('first_reg');
-        $technology_id = $request->input('technology_id');
+        //счётчик флага, если 10 то проверка
+        $flag_counter = $request->input('flag_counter');
+        //для определения первого запроса
+        $loc_counter = $request->input('loc_counter');
+                        sleep(3);
+
+//        $technology_id = $request->input('technology_id');
+        $technology_id=TelegramInvite::where('group',$group)->get();
+        $technology_id=$technology_id[0]['technology'];
 
             $MadelineProto = $this->madAuth($phone);
+//        if($loc_counter==0)
+//            {
+//        //проверяем на количество пользователей
+//                    try {
+//
+//                        $channels_ChannelParticipants = $MadelineProto->channels->getParticipants(['channel' => $group, 'filter' => ['_' => 'channelParticipantsSearch', 'q' => 'a'], 'offset' => 0, 'limit' => 1, 'hash' => 0,]);
+//                    }
+//                    catch (\Exception $e) {
+//
+//                        return response()->json([
+//                            'status' => 'success',
+//                            'success'   => 'no',
+//                            'message'   => 'ошибка авторизации',
+//                            'critical'   => 'yes',
+//                            'error'  => $e
+//                        ], 200);
+//                    }
+//                    return $channels_ChannelParticipants;
+//            }
+//        return dd('qwe');
+        $MadelineProto->async(true);
 
-                    //проверяем на количество пользователей
-                    try {
-                        $channels_ChannelParticipants = $MadelineProto->channels->getParticipants(['channel' => $group, 'filter' => ['_' => 'channelParticipantsSearch', 'q' => 'a'], 'offset' => 0, 'limit' => 1, 'hash' => 0,]);
-                    }
-                    catch (\Exception $e) {
-                        return response()->json([
-                            'status' => 'success',
-                            'success'   => 'no',
-                            'message'   => 'ошибка авторизации',
-                            'error'  => $e
-                        ], 200);
-                    }
-                   $channelNumberOfUsers=$channels_ChannelParticipants['count'];
-                    if($channelNumberOfUsers<200)
-                    {
-                    $dev_id = GeneralDev::where('technology_id', '=', $technology_id)->where('write', '=', '0')->first();
+                    $dev_id = UserForInvite::where('technology_id', '=', $technology_id)->where('invited', '=', '0')->where('username', '!=', 'NO')->first();
                     if ($dev_id === null) {
                         return response()->json([
                             'status' => 'success',
+                            'success'   =>'no',
                             'message'   => $technology_id . ' ' . 'пустая',
+                            'critical'   => 'yes',
                         ], 200);
                     }
                     if ($dev_id['username'] != 'NO') {
                         //если висит и не добавляет раскоменти строчку ниже, там наверное пользователь которого уже добавили или пригласили
 //                          return dd($dev_id);
 //                        return dd($group[$i].' '.$phones_start[$i][$s].' '.[$dev_id['username']].' '. $technology_id[$i]);
+//                        $client = new Client(['base_uri' => $MadelineProto->channels->inviteToChannel(['channel' => $group, 'users' => [$dev_id['username']]])]);
+//                        $client = new Client(['base_uri' => 'https://reqres.in/']);
+
+
+
+                        //рабочий КОД
+                        UserForInvite::where('user_id', '=', $dev_id['user_id'])->update([
+                            'invited' => '1'
+                        ]);
                         try {
-                            $channels_ChannelParticipants = $MadelineProto->channels->inviteToChannel(['channel' => $group, 'users' => [$dev_id['username']]]);
-                        }
-                        catch (\Exception $e) {
-                            GeneralDev::where('user_id', '=', $dev_id['user_id'])->update([
-                                'write' => '1'
-                            ]);
+                            $response =  $MadelineProto->channels->inviteToChannel(['channel' => $group, 'users' => [$dev_id['username']]]);
+                            Storage::append('/mad.txt', 'flag1');
+//                            Storage::append('/mad.txt', $response);
                             return response()->json([
                                 'status' => 'success',
-                                'success'   =>'no',
-                                'message'   => $e,
+                                'success'   =>'yes',
                             ], 200);
                         }
-                        GeneralDev::where('user_id', '=', $dev_id['user_id'])->update([
-                            'write' => '1'
+                        catch (\danog\MadelineProto\RPCErrorException $e) {
+
+
+                            if($e->getMessage()=="PEER_FLOOD")
+                            {
+                                return response()->json([
+                                    'status' => 'success',
+                                    'success'   =>'no',
+                                    'message'   =>$e->getMessage(),
+                                    'message1'   =>$e,
+                                    'critical'   => 'yes',
+                                ], 200);
+                            }
+                            else
+                            {
+
+                            UserForInvite::where('user_id', '=', $dev_id['user_id'])->update([
+                                'invited' => '1'
+                            ]);
+
+                                return response()->json([
+                                    'status' => 'success',
+                                    'success'   =>'no',
+                                    'message'   => $e,
+                                    'critical'   => 'no',
+                                ], 200);
+                            }
+
+                        }
+
+                        UserForInvite::where('user_id', '=', $dev_id['user_id'])->update([
+                            'invited' => '1'
                         ]);
+
                         return response()->json([
                             'status' => 'success',
                             'message'   => 'ok',
                             'success'   => 'yes',
-                            ], 200);
-                         } else
+                            'message1'   => '$response',
+                            'critical'   => 'no',
+                        ], 200);
+
+                        //рабочий КОД конец
+
+
+                    } else
                          {
-                        GeneralDev::where('user_id', '=', $dev_id['user_id'])->update([
-                            'write' => '1'
+                             UserForInvite::where('user_id', '=', $dev_id['user_id'])->update([
+                            'invited' => '1'
                         ]);
                         return response()->json([
                             'status' => 'success',
                             'success'   =>'no',
                             'message'   => 'no username',
+                            'critical'   => 'no',
                         ], 200);
                          }
                     }
-                else {
-                    return response()->json([
-                        'status' =>'success',
-                        'success'=>'no',
-                        'message'=>'200 users',
-                    ], 200);
+
+    public function get_users_for_inv(Request $request)
+    {
+        $phone = $request->input('phone');
+        $channel = $request->input('channel');
+        $technology = $request->input('technology');
+
+        if($phone=='')
+        {
+            return 'пустой телефон';
+        }
+        if($channel=='')
+        {
+            return 'пустой канал';
+        }
+        if($technology=='')
+        {
+            return 'пустая технология';
+        }
+        $MadelineProto = $this->madAuth($phone);
+        $added_users = 0;
+        $queryKey = ['',' ','a','ab','an','al','ac','am','at','ap',
+            'b','c','d','do','da','di','du','de',
+            'e','eb','en','el','el','em','et','ae', 'f', 'g',
+            'h',
+            'i', 'ib','in','il','im','it','ie','ip',
+            'j', 'k', 'l', 'm', 'n', 'o','ob','on','om','ot','oe','op',
+            'p', 'q', 'r', 's', 't', 'u','ub','un','um','ut','ue','up',
+            'v', 'w', 'x', 'y', 'z','zo','za','zi','zu','ze',
+        ];
+        foreach ($queryKey as $q) {
+            $channels_ChannelParticipants = $MadelineProto->channels->getParticipants(['channel' => $channel, 'filter' => ['_' => 'channelParticipantsSearch', 'q' => $q], 'offset' => 0, 'limit' => 1, 'hash' => 0,]);
+            //$channels_ChannelParticipants = $MadelineProto->channels->getParticipants(['channel' => $channel, 'filter' => ['_' => 'channelParticipantsSearch'], 'offset' => 0, 'limit' => 1, 'hash' => 0, ]);
+            $num = ($channels_ChannelParticipants['count']) / 200;
+            $num = ceil($num);
+
+            for ($i = 0; $i < $num; $i++) {
+                $channels_ChannelParticipants = $MadelineProto->channels->getParticipants(['channel' => $channel, 'filter' => ['_' => 'channelParticipantsSearch', 'q' => $q], 'offset' => $i, 'limit' => 200, 'hash' => 0,]);
+                foreach ($channels_ChannelParticipants['users'] as $users) {
+                    if (!isset($users['username'])) {
+                        $users['username'] = 'NO';
+                    }
+
+                    $flag_exist=0;
+
+                    if (UserForInvite::where('user_id', $users['id'])->exists()) {
+                        $flag_exist=1;
+                    }
+                    if($users['username'] != 'NO')
+                    {
+                        if (UserForInvite::where('username', $users['username'])->exists()) {
+                            $flag_exist=1;
+                        }
+                    }
+                    if($flag_exist==0)
+                    {
+                        UserForInvite::create([
+                            'user_id' => $users['id'],
+                            'username' => $users['username'],
+                            'technology_id' => $technology
+                        ]);
+                        $added_users++;
+                    }
+
                 }
+            }
+        }
+
+        $channels_ChannelParticipants = $MadelineProto->channels->getParticipants(['channel' => $channel, 'filter' => ['_' => 'channelParticipantsSearch'], 'offset' => $i, 'limit' => 200, 'hash' => 0,]);
+        $num = ($channels_ChannelParticipants['count']) / 200;
+        $num = ceil($num);
+
+        for ($i = 0; $i < $num; $i++) {
+            $channels_ChannelParticipants = $MadelineProto->channels->getParticipants(['channel' => $channel, 'filter' => ['_' => 'channelParticipantsSearch'], 'offset' => $i, 'limit' => 200, 'hash' => 0,]);
+            foreach ($channels_ChannelParticipants['users'] as $users) {
+                if (!isset($users['username'])) {
+                    $users['username'] = 'NO';
+                }
+
+                $flag_exist=0;
+
+                if (UserForInvite::where('user_id', $users['id'])->exists()) {
+                    $flag_exist=1;
+                }
+                if($users['username'] != 'NO')
+                {
+                    if (UserForInvite::where('username', $users['username'])->exists()) {
+                        $flag_exist=1;
+                    }
+                }
+                if($flag_exist==0)
+                {
+                    UserForInvite::create([
+                        'user_id' => $users['id'],
+                        'username' => $users['username'],
+                        'technology_id' => $technology
+                    ]);
+                    $added_users++;
+                }
+            }}
+
+
+        return ('всего '.$channels_ChannelParticipants['count'].' уникальных '.$added_users);
+
+    }
+    public function get_random_users_for_inv(Request $request)
+    {
+        $phone = $request->input('phone');
+        $channel = $request->input('channel');
+        $technology = $request->input('technology');
+        if($phone=='')
+        {
+            return 'пустой телефон';
+        }
+        if($channel=='')
+        {
+            return 'пустой канал';
+        }
+        if($technology=='')
+        {
+            return 'пустая технология';
+        }
+        $MadelineProto = $this->madAuth($phone);
+        $added_users = 0;
+
+
+        $queryKey = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+        $rand_arr=[];
+        for ($j = 0; $j < 500; $j++) {
+            $rand_string_f='';
+            for ($i = 0; $i < 2; $i++) {
+                $rand_string = array_rand($queryKey);
+                $rand_string_f .= $queryKey[$rand_string];
+            }
+            $rand_arr[] = $rand_string_f;
+        }
+
+        foreach ($rand_arr as $q) {
+            $channels_ChannelParticipants = $MadelineProto->channels->getParticipants(['channel' => $channel, 'filter' => ['_' => 'channelParticipantsSearch', 'q' => $q], 'offset' => 0, 'limit' => 1, 'hash' => 0,]);
+            $num = ($channels_ChannelParticipants['count']) / 200;
+            $num = ceil($num);
+
+            for ($i = 0; $i < $num; $i++) {
+                $channels_ChannelParticipants = $MadelineProto->channels->getParticipants(['channel' => $channel, 'filter' => ['_' => 'channelParticipantsSearch', 'q' => $q], 'offset' => $i, 'limit' => 200, 'hash' => 0,]);
+                foreach ($channels_ChannelParticipants['users'] as $users) {
+                    if (!isset($users['username'])) {
+                        $users['username'] = 'NO';
+                    }
+
+                    $flag_exist=0;
+
+                    if (UserForInvite::where('user_id', $users['id'])->exists()) {
+                        $flag_exist=1;
+                    }
+                    if($users['username'] != 'NO')
+                    {
+                        if (UserForInvite::where('username', $users['username'])->exists()) {
+                            $flag_exist=1;
+                        }
+                    }
+                    if($flag_exist==0)
+                    {
+                        UserForInvite::create([
+                            'user_id' => $users['id'],
+                            'username' => $users['username'],
+                            'technology_id' => $technology
+                        ]);
+                        $added_users++;
+                    }
+                }
+            }
+        }
+        return ('всего '.$channels_ChannelParticipants['count'].' уникальных '.$added_users);
+    }
+    public function delete_NO_users_for_inv(Request $request)
+    {
+        UserForInvite::where('username', '=', 'NO')->update(['invited' => 1]);
+        return 'ok';
+    }
+    public function get_start_data_telegram()
+    {
+        $data=TelegramInvite::all();
+        foreach ($data as $one_group)
+        {
+            $count_of_users=UserForInvite::where('technology_id',$one_group['technology'] )
+                ->where('invited',0 )
+                ->where('username','!=','NO' )
+                -> count();
+            $one_group['count_user']=$count_of_users;
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message'   => $data,
+            'success'   => 'yes',
+        ], 200);
     }
 }
 //        $Updates = $MadelineProto->messages->addChatUser(['chat_id' => 'https://t.me/avtobaraholka_samara', 'user_id' => '@bobiksamara', 'fwd_limit' => '1', ]);

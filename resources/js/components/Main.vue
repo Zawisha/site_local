@@ -2,16 +2,17 @@
     <div>
           <div class="container login_container">
               <div class="row col-12 d-flex float-left ">
-                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button" v-on:click="go_get_telegram_users()">Поиск пользователей в группе</button>
-                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button" v-on:click="go_send_message()">Отправка сообщений</button>
-                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button" v-on:click="go_admin()">Админка. Редактирование</button>
-                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button" v-on:click="go_search_telegram()">Поиск в телеграм</button>
-                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button" v-on:click="go_to_processing()">Обработка</button>
-                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button vk_butt" v-on:click="go_to_vk()">vk и отправка в телеграм</button>
-                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button vk_butt" v-on:click="go_to_vk_send()">Рассылка ВК и телега</button>
-                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button vk_butt" v-on:click="go_to_vk_mes()">сообщения ВК</button>
-                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button vk_butt" v-on:click="go_to_vk_hand()">сообщения ВК вручную</button>
-                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button vk_butt" v-on:click="go_to_content()">контент телеграм из ВК</button>
+                  <button  type="button" class="col btn btn-lg btn-outline-dark register_button" v-on:click="go_get_telegram_users()">Поиск пользователей в группе</button>
+<!--                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button" v-on:click="go_send_message()">Отправка сообщений</button>-->
+                  <button  type="button" class="col btn btn-lg btn-outline-dark register_button" v-on:click="go_admin()">Админка</button>
+<!--                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button" v-on:click="go_search_telegram()">Поиск в телеграм</button>-->
+<!--                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button" v-on:click="go_to_processing()">Обработка</button>-->
+<!--                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button vk_butt" v-on:click="go_to_vk()">vk и отправка в телеграм</button>-->
+<!--                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button vk_butt" v-on:click="go_to_vk_send()">Рассылка ВК и телега</button>-->
+<!--                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button vk_butt" v-on:click="go_to_vk_mes()">сообщения ВК</button>-->
+<!--                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button vk_butt" v-on:click="go_to_vk_hand()">сообщения ВК вручную</button>-->
+<!--                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button vk_butt" v-on:click="go_to_content()">контент телеграм из ВК</button>-->
+                  <button  type="button" class="col btn btn-lg btn-outline-dark register_button vk_butt" v-on:click="go_to_telegram()">рассылка по телеграмм</button>
 <!--                  <button  type="button" class="col-2 btn btn-lg btn-outline-dark register_button" v-on:click="go_to_test()">test</button>-->
               </div>
           </div>
@@ -35,6 +36,10 @@ export default {
     created() {
     },
     methods: {
+        go_to_telegram()
+        {
+            Vue.router.push({name:'telegram_sending'})
+        },
         go_to_content()
         {
             Vue.router.push({name:'content'})

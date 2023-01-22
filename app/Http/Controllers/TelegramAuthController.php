@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\TelegramPhones;
+use danog\MadelineProto\Settings\Connection;
+use danog\MadelineProto\Stream\Proxy\SocksProxy;
 use Illuminate\Http\Request;
 use App\Models\GeneralDev;
 use App\Models\TechList;
@@ -19,6 +21,10 @@ class TelegramAuthController extends Controller
 //            copy('https://phar.madelineproto.xyz/madeline.php', 'madeline.php');
 //        }
         $phone = $request->input('phone');
+        $proxy_adres = $request->input('proxy_adres');
+        $proxy_port = $request->input('proxy_port');
+        $proxy_username = $request->input('proxy_username');
+        $proxy_password = $request->input('proxy_password');
         if($phone=='')
         {
             return 'Пустой телефон';
@@ -57,7 +63,37 @@ class TelegramAuthController extends Controller
             unlink(public_path().'/my_mad_sessions/'.$phone.'/session.madeline.safe.php.lock');
         }
 
-        $settings = [
+if($proxy_adres=='')
+{
+    $settings = [
+        'app_info' => [ // Эти данные мы получили после регистрации приложения на https://my.telegram.org
+            'api_id' => $phones[0]['api_id'],
+            'api_hash' => $phones[0]['api_hash'],
+            'device_model'=>'Desktop',
+        ],
+        'logger' => [ // Вывод сообщений и ошибок
+            'logger' => 3, // выводим сообещения через echo
+            'logger_level' => 4, // выводим только критические ошибки.
+        ],
+        'serialization' => [
+            'serialization_interval' => 300,
+            //Очищать файл сессии от некритичных данных.
+            //Значительно снижает потребление памяти при интенсивном использовании, но может вызывать проблемы
+            'cleanup_before_serialization' => true,
+        ]
+
+    ];
+    TelegramPhones::where('phone', '=',$phone)->
+    update([
+        'proxy_adres' => '',
+        'proxy_port' => '',
+        'proxy_username' => '',
+        'proxy_password' => '',
+    ]);
+}
+else
+{
+    $settings = [
             'app_info' => [ // Эти данные мы получили после регистрации приложения на https://my.telegram.org
                 'api_id' => $phones[0]['api_id'],
                 'api_hash' => $phones[0]['api_hash'],
@@ -73,7 +109,28 @@ class TelegramAuthController extends Controller
                 //Значительно снижает потребление памяти при интенсивном использовании, но может вызывать проблемы
                 'cleanup_before_serialization' => true,
             ],
+            'connection_settings' => [
+                'all' => [
+                    'proxy' => '\SocksProxy',
+                    'proxy_extra' => [
+                        'address' => $proxy_adres,
+                        'port' => $proxy_port,
+                        'username' => $proxy_username,//Можно удалить если логина нет
+                        'password' => $proxy_password,//Можно удалить если пароля нет
+                    ],
+                ],
+            ],
+
         ];
+    TelegramPhones::where('phone', '=',$phone)->
+    update([
+        'proxy_adres' => $proxy_adres,
+        'proxy_port' => $proxy_port,
+        'proxy_username' => $proxy_username,
+        'proxy_password' => $proxy_password,
+    ]);
+}
+
         $MadelineProto = new \danog\MadelineProto\API(public_path().'/my_mad_sessions/'.$phone.'/session.madeline', $settings);
         //$MadelineProto = new \danog\MadelineProto\API('session.madeline', $settings);
         $MadelineProto->phone_login($phones[0]['phone']);
@@ -83,6 +140,10 @@ class TelegramAuthController extends Controller
     {
         $auth_code = $request->input('auth_code');
         $phone = $request->input('phone');
+        $proxy_adres = $request->input('proxy_adres');
+        $proxy_port = $request->input('proxy_port');
+        $proxy_username = $request->input('proxy_username');
+        $proxy_password = $request->input('proxy_password');
         if($phone=='')
         {
             return 'пустой телефон';
@@ -92,6 +153,29 @@ class TelegramAuthController extends Controller
             return 'пустой код';
         }
         $phones = TelegramPhones::where('phone','=',$phone) ->get();
+        if($proxy_adres=='')
+        {
+            $settings = [
+                'app_info' => [ // Эти данные мы получили после регистрации приложения на https://my.telegram.org
+                    'api_id' => $phones[0]['api_id'],
+                    'api_hash' => $phones[0]['api_hash'],
+                    'device_model'=>'Desktop',
+                ],
+                'logger' => [ // Вывод сообщений и ошибок
+                    'logger' => 3, // выводим сообещения через echo
+                    'logger_level' => 4, // выводим только критические ошибки.
+                ],
+                'serialization' => [
+                    'serialization_interval' => 300,
+                    //Очищать файл сессии от некритичных данных.
+                    //Значительно снижает потребление памяти при интенсивном использовании, но может вызывать проблемы
+                    'cleanup_before_serialization' => true,
+                ]
+
+            ];
+        }
+        else
+        {
         $settings = [
             'app_info' => [ // Эти данные мы получили после регистрации приложения на https://my.telegram.org
                 'api_id' => $phones[0]['api_id'],
@@ -108,8 +192,21 @@ class TelegramAuthController extends Controller
                 //Значительно снижает потребление памяти при интенсивном использовании, но может вызывать проблемы
                 'cleanup_before_serialization' => true,
             ],
+            'connection_settings' => [
+                'all' => [
+                    'proxy' => '\SocksProxy',
+                    'proxy_extra' => [
+                        'address' => $proxy_adres,
+                        'port' => $proxy_port,
+                        'username' => $proxy_username,//Можно удалить если логина нет
+                        'password' => $proxy_password,//Можно удалить если пароля нет
+                    ],
+                ],
+            ],
+
         ];
-//
+        }
+
         $MadelineProto = new \danog\MadelineProto\API(public_path().'/my_mad_sessions/'.$phone.'/session.madeline', $settings);
         //костыль
         $MadelineProto->phone_login($phones[0]['phone']);

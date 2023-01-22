@@ -6,6 +6,16 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
+.check_do {
+    margin-left: 0px;
+}
+.do_col_group {
+    min-width: 130px;
+}
+.start_work {
+    margin-left: 20px;
+    margin-top: 6px;
+}
 .img_body {
 
 }

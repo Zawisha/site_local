@@ -30,6 +30,9 @@ Route::post('/autorization', [\App\Http\Controllers\TelegramAuthController::clas
 Route::post('/get_phones', [\App\Http\Controllers\TelegramUsersController::class, 'get_phones']);
 Route::post('/send_code', [\App\Http\Controllers\TelegramAuthController::class, 'send_code']);
 Route::post('/get_users', [\App\Http\Controllers\TelegramUsersController::class, 'get_users']);
+Route::post('/get_users_for_inv', [\App\Http\Controllers\TelegramUsersController::class, 'get_users_for_inv']);
+Route::post('/get_random_users_for_inv', [\App\Http\Controllers\TelegramUsersController::class, 'get_random_users_for_inv']);
+Route::post('/delete_NO_users_for_inv', [\App\Http\Controllers\TelegramUsersController::class, 'delete_NO_users_for_inv']);
 Route::post('/send_message', [\App\Http\Controllers\TelegramMessageController::class, 'send_message']);
 Route::post('/test', [\App\Http\Controllers\TelegramUsersController::class, 'test']);
 Route::post('/get_technology', [\App\Http\Controllers\TelegramUsersController::class, 'get_technology']);
@@ -75,6 +78,7 @@ Route::post('/showVKusers', [\App\Http\Controllers\VkController::class, 'showVKu
 Route::post('/deleteshowVKusers', [\App\Http\Controllers\VkController::class, 'deleteshowVKusers']);
 Route::post('/get_vk_text_buy', [\App\Http\Controllers\VkController::class, 'get_vk_text_buy']);
 Route::post('/get_list_content_group', [\App\Http\Controllers\VkController::class, 'get_list_content_group']);
+Route::post('/get_start_data_telegram', [\App\Http\Controllers\TelegramUsersController::class, 'get_start_data_telegram']);
 
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();

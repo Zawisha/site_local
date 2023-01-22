@@ -674,7 +674,7 @@ class VkController extends Controller
         $group_post_last=VkSearchGroup::where('group_id',$group['group_id'])->get('last_post');
         foreach ($posts as $post)
         {
-            //закреплённый пост не берём и смотрим чтобы пост был новее чем тот что я уже брал
+            //закреплённый пост не берё м и смотрим чтобы пост был новее чем тот что я уже брал
             if($post->id>$group_post_last[0]->last_post)
             {
                 array_push($final_result,$post);

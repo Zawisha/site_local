@@ -3,21 +3,21 @@
         <div class="container top_button_menu">
     <button type="button" class="btn btn-info textarea_admin" v-on:click="back()" >На главную</button>
         </div>
-    <div class="container login_register_form_container">
-        <h1>Редактирование технологии</h1>
-        <div>
-            Список технологий
-        </div>
-        <select v-model="technology">
-            <option v-for="tech in technologies" :value="tech.id" v-on:click="show_text()">{{ tech.techno }}</option>
-        </select>
-        <div>Количество {{ count_technology }} </div>
-        <div>
-            <div>Текст рассылки</div>
-            <textarea class="form-control textarea_admin" rows="3"  name="text" v-model="text_technology" placeholder="Введите текст рассылки"> </textarea>
-            <button type="button" class="btn btn-success btn-block procedure_button textarea_admin" v-on:click="save_text()" >Сохранить текст</button>
-        </div>
-    </div>
+<!--    <div class="container login_register_form_container">-->
+<!--        <h1>Редактирование технологии</h1>-->
+<!--        <div>-->
+<!--            Список технологий-->
+<!--        </div>-->
+<!--        <select v-model="technology">-->
+<!--            <option v-for="tech in technologies" :value="tech.id" v-on:click="show_text()">{{ tech.techno }}</option>-->
+<!--        </select>-->
+<!--        <div>Количество {{ count_technology }} </div>-->
+<!--        <div>-->
+<!--            <div>Текст рассылки</div>-->
+<!--            <textarea class="form-control textarea_admin" rows="3"  name="text" v-model="text_technology" placeholder="Введите текст рассылки"> </textarea>-->
+<!--            <button type="button" class="btn btn-success btn-block procedure_button textarea_admin" v-on:click="save_text()" >Сохранить текст</button>-->
+<!--        </div>-->
+<!--    </div>-->
         <div class="container login_register_form_container">
             <h1>Добавление технологии</h1>
             <div>Название технологии</div>
@@ -41,67 +41,67 @@
                 <button type="button" class="btn btn-warning btn-block procedure_button textarea_admin" v-on:click="save_new_tel_user()" >Сохранить пользователя</button>
             </div>
         </div>
-        <div class="container login_register_form_container">
-            <h1>Добавление старых пользователей</h1>
-            <div>Введите username телеги старых пользователя в колонку</div>
-            <textarea class="form-control textarea_admin" rows="10"  name="text" v-model="add_old_users_var" placeholder="Список пользователей в колонку"></textarea>
-            <div>
-                <button type="button" class="btn btn-dark btn-block procedure_button textarea_admin" v-on:click="add_old_users()" >Добавить пользователей</button>
-            </div>
-        </div>
+<!--        <div class="container login_register_form_container">-->
+<!--            <h1>Добавление старых пользователей</h1>-->
+<!--            <div>Введите username телеги старых пользователя в колонку</div>-->
+<!--            <textarea class="form-control textarea_admin" rows="10"  name="text" v-model="add_old_users_var" placeholder="Список пользователей в колонку"></textarea>-->
+<!--            <div>-->
+<!--                <button type="button" class="btn btn-dark btn-block procedure_button textarea_admin" v-on:click="add_old_users()" >Добавить пользователей</button>-->
+<!--            </div>-->
+<!--        </div>-->
 
 
-        <div class="container login_register_form_container">
-            <h1>Добавление группы</h1>
-            <div>Добавьте название группы</div>
-            <textarea class="form-control textarea_admin" rows="10"  name="text" v-model="group_name" placeholder="название группы"></textarea>
-            <div>
-                <button type="button" class="btn btn-dark btn-block procedure_button textarea_admin" v-on:click="add_group_name()" >Добавить группу</button>
-            </div>
-        </div>
+<!--        <div class="container login_register_form_container">-->
+<!--            <h1>Добавление группы</h1>-->
+<!--            <div>Добавьте название группы</div>-->
+<!--            <textarea class="form-control textarea_admin" rows="10"  name="text" v-model="group_name" placeholder="название группы"></textarea>-->
+<!--            <div>-->
+<!--                <button type="button" class="btn btn-dark btn-block procedure_button textarea_admin" v-on:click="add_group_name()" >Добавить группу</button>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <div class="container login_register_form_container">
-            <h1>Добавление номера в группу</h1>
-            <div class="row">
-            <div class="col-3">
-            <div>Выберите телефон</div>
-            <select v-model="phone_to_group">
-                <option v-for="phone in phone_list">{{ phone.phone }}</option>
-            </select>
-            <div>Выберите группу</div>
-            <select v-model="group_to_add">
-                <option v-for="group in group_list" v-bind:value="group.id" v-on:click="empty_arr()">{{ group.group_name }}</option>
-            </select>
-            </div>
+<!--        <div class="container login_register_form_container">-->
+<!--            <h1>Добавление номера в группу</h1>-->
+<!--            <div class="row">-->
+<!--            <div class="col-3">-->
+<!--            <div>Выберите телефон</div>-->
+<!--            <select v-model="phone_to_group">-->
+<!--                <option v-for="phone in phone_list">{{ phone.phone }}</option>-->
+<!--            </select>-->
+<!--            <div>Выберите группу</div>-->
+<!--            <select v-model="group_to_add">-->
+<!--                <option v-for="group in group_list" v-bind:value="group.id" v-on:click="empty_arr()">{{ group.group_name }}</option>-->
+<!--            </select>-->
+<!--            </div>-->
 
-            <div class="col-9">
-            <ul id="example-1">
-                <li v-for="phones in group_list_old" class="admin_phones">
-                    {{ phones.phone }}
-                    <button type="button" class="btn btn-danger" v-on:click="delete_number(phones.phone )">Удалить номер</button>
-                </li>
-            </ul>
-            </div>
-        </div>
-            <div>
-                <button type="button" class="btn btn-dark btn-block procedure_button textarea_admin" v-on:click="add_phone_to_group()" >Добавить номер в группу</button>
-            </div>
-        </div>
+<!--            <div class="col-9">-->
+<!--            <ul id="example-1">-->
+<!--                <li v-for="phones in group_list_old" class="admin_phones">-->
+<!--                    {{ phones.phone }}-->
+<!--                    <button type="button" class="btn btn-danger" v-on:click="delete_number(phones.phone )">Удалить номер</button>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--            <div>-->
+<!--                <button type="button" class="btn btn-dark btn-block procedure_button textarea_admin" v-on:click="add_phone_to_group()" >Добавить номер в группу</button>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <div class="container login_register_form_container">
-            <h1>Добавление канала в список каналов</h1>
-            <div>
-                Список технологий
-            </div>
-            <select v-model="channel_technology">
-                <option v-for="tech in technologies" :value="tech.id">{{ tech.techno }}</option>
-            </select>
-            <div>Добавьте название канала в формате @channel поштучно</div>
-            <textarea class="form-control textarea_admin" rows="1"  name="text" v-model="channel" placeholder="название канала"></textarea>
-            <div>
-                <button type="button" class="btn btn-dark btn-block procedure_button textarea_admin" v-on:click="add_channel_tech()" >Добавить канал</button>
-            </div>
-        </div>
+<!--        <div class="container login_register_form_container">-->
+<!--            <h1>Добавление канала в список каналов</h1>-->
+<!--            <div>-->
+<!--                Список технологий-->
+<!--            </div>-->
+<!--            <select v-model="channel_technology">-->
+<!--                <option v-for="tech in technologies" :value="tech.id">{{ tech.techno }}</option>-->
+<!--            </select>-->
+<!--            <div>Добавьте название канала в формате @channel поштучно</div>-->
+<!--            <textarea class="form-control textarea_admin" rows="1"  name="text" v-model="channel" placeholder="название канала"></textarea>-->
+<!--            <div>-->
+<!--                <button type="button" class="btn btn-dark btn-block procedure_button textarea_admin" v-on:click="add_channel_tech()" >Добавить канал</button>-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="container login_register_form_container">
             <h1>Выделение id из username. В формате @username</h1>
             <div>

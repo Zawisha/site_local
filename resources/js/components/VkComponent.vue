@@ -109,12 +109,12 @@
                 added_message_post_list:'',
                 show_instruction:false,
                 number_in_array:0,
-                number:'+79626348703',
-                group:'https://t.me/avto_rynok_moskva_2',
+                number:'+79612614719',
+                group:'https://t.me/avto_moskva_ok',
                 //счётчик для одного телефона
                 number_local_counter:0,
                 //id технологии
-                technology_id:'28'
+                technology_id:'32'
             }
         },
 

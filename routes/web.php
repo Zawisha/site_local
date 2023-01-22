@@ -4,7 +4,7 @@ use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/{any}', [MainController::class, 'index'])->where('any', '.*')->name('main');
-//Route::get('/get_telegram', [\App\Http\Controllers\TelegramController::class, 'get_telegram']);
+//Route::get('/invite_users/{group}/{phone}', [\App\Http\Controllers\TelegramUsersController::class, 'invite_users']);
 ///*
 //|--------------------------------------------------------------------------
 //| Web Routes

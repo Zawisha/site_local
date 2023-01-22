@@ -2347,8 +2347,39 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2433,7 +2464,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       flag: 0,
       dot_counter: 0,
       dot_res_arr: [],
-      channels_name: []
+      channels_name: [],
+      help1: false,
+      proxy_adres: '',
+      proxy_port: '',
+      proxy_username: '',
+      proxy_password: ''
     };
   },
   mounted: function mounted() {
@@ -2458,6 +2494,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         var data = _ref.data;
         alert(data);
       });
+    },
+    help1_show: function help1_show() {
+      this.help1 = !this.help1;
     },
     back: function back() {
       Vue.router.push({
@@ -2486,23 +2525,21 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       var _this2 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/dotekanie', {
-        phone: "+17015104126",
+        phone: "+375298684190",
         counter: this.dot_counter
       }).then(function (_ref3) {
         var data = _ref3.data;
 
         if (data == 'done') {
           alert('Дотекание окончено');
-        } else if (data < 10) {
-          console.log(_typeof(data));
-          console.log(data);
+        } else if (data < 100) {
           _this2.channels_name[_this2.dot_counter]['numb'] = _this2.channels_name[_this2.dot_counter]['numb'] + data;
           _this2.dot_counter++;
+          console.log(_this2.dot_counter);
+          console.log(_this2.channels_name);
 
           _this2.dotekanie();
         } else {
-          console.log(_typeof(data));
-          console.log(data);
           _this2.channels_name[_this2.dot_counter]['numb'] = _this2.channels_name[_this2.dot_counter]['numb'] + data;
 
           _this2.dotekanie();
@@ -2514,8 +2551,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         phone: this.phone
       });
     },
-    get_users: function get_users() {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_users', {
+    get_users_for_inv: function get_users_for_inv() {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_users_for_inv', {
         phone: this.phone,
         channel: this.channel,
         technology: this.technology
@@ -2524,10 +2561,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         return alert(data);
       });
     },
-    get_random_users: function get_random_users() {
+    get_random_users_for_inv: function get_random_users_for_inv() {
       var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_random_users', {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_random_users_for_inv', {
         phone: this.phone,
         channel: this.channel,
         technology: this.technology
@@ -2536,26 +2573,62 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         return console.log(data), _this3.get_random_users();
       });
     },
-    send_code: function send_code() {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/send_code', {
-        phone: this.phone,
-        auth_code: this.auth_code
-      }).then(function (_ref6) {
+    delete_NO_users_for_inv: function delete_NO_users_for_inv() {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/delete_NO_users_for_inv', {}).then(function (_ref6) {
         var data = _ref6.data;
-        return alert(data);
+        alert(data);
       });
     },
-    autorization: function autorization() {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/autorization', {
-        phone: this.phone
+    get_users: function get_users() {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_users', {
+        phone: this.phone,
+        channel: this.channel,
+        technology: this.technology
       }).then(function (_ref7) {
         var data = _ref7.data;
         return alert(data);
       });
     },
-    get_phones: function get_phones(inp) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_phones', {}).then(function (_ref8) {
+    get_random_users: function get_random_users() {
+      var _this4 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_random_users', {
+        phone: this.phone,
+        channel: this.channel,
+        technology: this.technology
+      }).then(function (_ref8) {
         var data = _ref8.data;
+        return console.log(data), _this4.get_random_users();
+      });
+    },
+    send_code: function send_code() {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/send_code', {
+        phone: this.phone,
+        auth_code: this.auth_code,
+        proxy_adres: this.proxy_adres,
+        proxy_port: this.proxy_port,
+        proxy_username: this.proxy_username,
+        proxy_password: this.proxy_password
+      }).then(function (_ref9) {
+        var data = _ref9.data;
+        return alert(data);
+      });
+    },
+    autorization: function autorization() {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/autorization', {
+        phone: this.phone,
+        proxy_adres: this.proxy_adres,
+        proxy_port: this.proxy_port,
+        proxy_username: this.proxy_username,
+        proxy_password: this.proxy_password
+      }).then(function (_ref10) {
+        var data = _ref10.data;
+        return alert(data);
+      });
+    },
+    get_phones: function get_phones(inp) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_phones', {}).then(function (_ref11) {
+        var data = _ref11.data;
         return data.forEach(function (entry) {
           inp.push({
             id: entry.id,
@@ -2567,8 +2640,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       });
     },
     get_technology: function get_technology(inp) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_technology', {}).then(function (_ref9) {
-        var data = _ref9.data;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_technology', {}).then(function (_ref12) {
+        var data = _ref12.data;
         return data.forEach(function (entry) {
           inp.push({
             id: entry.id,
@@ -2692,6 +2765,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2704,6 +2778,11 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {},
   created: function created() {},
   methods: {
+    go_to_telegram: function go_to_telegram() {
+      Vue.router.push({
+        name: 'telegram_sending'
+      });
+    },
     go_to_content: function go_to_content() {
       Vue.router.push({
         name: 'content'
@@ -3490,6 +3569,170 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TelegramSendingComponent.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TelegramSendingComponent.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      vk_group: '',
+      telegram_channel: '',
+      response_add_vk_to_channel: '',
+      post_list: new Array(),
+      response_post_list: new Array(),
+      post_list_one: '',
+      added_message_post_list: '',
+      show_instruction: false,
+      number_in_array: 0,
+      number: '+79612614719',
+      group: 'https://t.me/avto_moskva_ok',
+      //счётчик для одного телефона
+      number_local_counter: 0,
+      //id технологии
+      technology_id: '32',
+      global_arr: new Array(),
+      work_counter: 0
+    };
+  },
+  mounted: function mounted() {
+    this.get_start_data_telegram(this.global_arr);
+  },
+  methods: {
+    get_start_data_telegram: function get_start_data_telegram(inp) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_start_data_telegram', {}).then(function (_ref) {
+        var data = _ref.data;
+        data.message.forEach(function (entry) {
+          inp.push({
+            id: entry.id,
+            group: entry.group,
+            number: entry.number,
+            "do": entry["do"],
+            count_user: entry.count_user,
+            loc_counter: 0,
+            fuse_counter: 0,
+            flag_counter: 0,
+            log: []
+          });
+        });
+      });
+    },
+    back: function back() {
+      Vue.router.push({
+        name: 'main'
+      });
+    },
+    log: function log(index) {
+      console.log(this.global_arr[index]['log']);
+    },
+    invite_users: function invite_users() {
+      var _this = this;
+
+      if (this.global_arr.length != this.work_counter) {
+        if (this.global_arr[this.work_counter]['do'] == 1) {
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/invite_users', {
+            phone: this.global_arr[this.work_counter]['number'],
+            group: this.global_arr[this.work_counter]['group'],
+            flag_counter: this.global_arr[this.work_counter]['flag_counter'],
+            loc_counter: this.global_arr[this.work_counter]['loc_counter']
+          }).then(function (_ref2) {
+            var data = _ref2.data;
+            _this.global_arr[_this.work_counter]['fuse_counter']++;
+
+            if (data.success === 'yes') {
+              _this.global_arr[_this.work_counter]['loc_counter']++;
+              _this.global_arr[_this.work_counter]['flag_counter']++;
+
+              _this.global_arr[_this.work_counter]['log'].push(data.message);
+
+              if (_this.global_arr[_this.work_counter]['loc_counter'] < 50 && _this.global_arr[_this.work_counter]['loc_counter'] < 100) {
+                _this.invite_users();
+              } else {
+                _this.work_counter++;
+
+                _this.invite_users();
+              }
+            } else {
+              if (data.critical === 'yes') {
+                _this.global_arr[_this.work_counter]['log'].push(data.message);
+
+                _this.work_counter++; // this.invite_users()
+              } else {
+                if (_this.global_arr[_this.work_counter]['loc_counter'] < 100) {
+                  _this.global_arr[_this.work_counter]['log'].push(data.message);
+
+                  _this.invite_users();
+                } else {
+                  _this.global_arr[_this.work_counter]['log'].push(data.message);
+
+                  _this.work_counter++;
+
+                  _this.invite_users();
+                }
+              }
+            }
+          });
+        } else {
+          this.work_counter++;
+          this.invite_users();
+        }
+      } else {
+        alert('сделано');
+      }
+    },
+    show_instruction_f: function show_instruction_f() {
+      this.show_instruction = !this.show_instruction;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TestComponent.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TestComponent.vue?vue&type=script&lang=js& ***!
@@ -3656,12 +3899,12 @@ __webpack_require__.r(__webpack_exports__);
       added_message_post_list: '',
       show_instruction: false,
       number_in_array: 0,
-      number: '+79626348703',
-      group: 'https://t.me/avto_rynok_moskva_2',
+      number: '+79612614719',
+      group: 'https://t.me/avto_moskva_ok',
       //счётчик для одного телефона
       number_local_counter: 0,
       //id технологии
-      technology_id: '28'
+      technology_id: '32'
     };
   },
   mounted: function mounted() {},
@@ -39789,103 +40032,6 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "container login_register_form_container" }, [
-      _c("h1", [_vm._v("Редактирование технологии")]),
-      _vm._v(" "),
-      _c("div", [_vm._v("\n        Список технологий\n    ")]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.technology,
-              expression: "technology"
-            }
-          ],
-          on: {
-            change: function($event) {
-              var $$selectedVal = Array.prototype.filter
-                .call($event.target.options, function(o) {
-                  return o.selected
-                })
-                .map(function(o) {
-                  var val = "_value" in o ? o._value : o.value
-                  return val
-                })
-              _vm.technology = $event.target.multiple
-                ? $$selectedVal
-                : $$selectedVal[0]
-            }
-          }
-        },
-        _vm._l(_vm.technologies, function(tech) {
-          return _c(
-            "option",
-            {
-              domProps: { value: tech.id },
-              on: {
-                click: function($event) {
-                  return _vm.show_text()
-                }
-              }
-            },
-            [_vm._v(_vm._s(tech.techno))]
-          )
-        }),
-        0
-      ),
-      _vm._v(" "),
-      _c("div", [_vm._v("Количество " + _vm._s(_vm.count_technology) + " ")]),
-      _vm._v(" "),
-      _c("div", [
-        _c("div", [_vm._v("Текст рассылки")]),
-        _vm._v(" "),
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.text_technology,
-              expression: "text_technology"
-            }
-          ],
-          staticClass: "form-control textarea_admin",
-          attrs: {
-            rows: "3",
-            name: "text",
-            placeholder: "Введите текст рассылки"
-          },
-          domProps: { value: _vm.text_technology },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.text_technology = $event.target.value
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass:
-              "btn btn-success btn-block procedure_button textarea_admin",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                return _vm.save_text()
-              }
-            }
-          },
-          [_vm._v("Сохранить текст")]
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "container login_register_form_container" }, [
       _c("h1", [_vm._v("Добавление технологии")]),
       _vm._v(" "),
       _c("div", [_vm._v("Название технологии")]),
@@ -40053,322 +40199,6 @@ var render = function() {
             }
           },
           [_vm._v("Сохранить пользователя")]
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "container login_register_form_container" }, [
-      _c("h1", [_vm._v("Добавление старых пользователей")]),
-      _vm._v(" "),
-      _c("div", [
-        _vm._v("Введите username телеги старых пользователя в колонку")
-      ]),
-      _vm._v(" "),
-      _c("textarea", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.add_old_users_var,
-            expression: "add_old_users_var"
-          }
-        ],
-        staticClass: "form-control textarea_admin",
-        attrs: {
-          rows: "10",
-          name: "text",
-          placeholder: "Список пользователей в колонку"
-        },
-        domProps: { value: _vm.add_old_users_var },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.add_old_users_var = $event.target.value
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c("div", [
-        _c(
-          "button",
-          {
-            staticClass:
-              "btn btn-dark btn-block procedure_button textarea_admin",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                return _vm.add_old_users()
-              }
-            }
-          },
-          [_vm._v("Добавить пользователей")]
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "container login_register_form_container" }, [
-      _c("h1", [_vm._v("Добавление группы")]),
-      _vm._v(" "),
-      _c("div", [_vm._v("Добавьте название группы")]),
-      _vm._v(" "),
-      _c("textarea", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.group_name,
-            expression: "group_name"
-          }
-        ],
-        staticClass: "form-control textarea_admin",
-        attrs: { rows: "10", name: "text", placeholder: "название группы" },
-        domProps: { value: _vm.group_name },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.group_name = $event.target.value
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c("div", [
-        _c(
-          "button",
-          {
-            staticClass:
-              "btn btn-dark btn-block procedure_button textarea_admin",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                return _vm.add_group_name()
-              }
-            }
-          },
-          [_vm._v("Добавить группу")]
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "container login_register_form_container" }, [
-      _c("h1", [_vm._v("Добавление номера в группу")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-3" }, [
-          _c("div", [_vm._v("Выберите телефон")]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.phone_to_group,
-                  expression: "phone_to_group"
-                }
-              ],
-              on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.phone_to_group = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
-              }
-            },
-            _vm._l(_vm.phone_list, function(phone) {
-              return _c("option", [_vm._v(_vm._s(phone.phone))])
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _c("div", [_vm._v("Выберите группу")]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.group_to_add,
-                  expression: "group_to_add"
-                }
-              ],
-              on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.group_to_add = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
-              }
-            },
-            _vm._l(_vm.group_list, function(group) {
-              return _c(
-                "option",
-                {
-                  domProps: { value: group.id },
-                  on: {
-                    click: function($event) {
-                      return _vm.empty_arr()
-                    }
-                  }
-                },
-                [_vm._v(_vm._s(group.group_name))]
-              )
-            }),
-            0
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-9" }, [
-          _c(
-            "ul",
-            { attrs: { id: "example-1" } },
-            _vm._l(_vm.group_list_old, function(phones) {
-              return _c("li", { staticClass: "admin_phones" }, [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(phones.phone) +
-                    "\n                "
-                ),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.delete_number(phones.phone)
-                      }
-                    }
-                  },
-                  [_vm._v("Удалить номер")]
-                )
-              ])
-            }),
-            0
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", [
-        _c(
-          "button",
-          {
-            staticClass:
-              "btn btn-dark btn-block procedure_button textarea_admin",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                return _vm.add_phone_to_group()
-              }
-            }
-          },
-          [_vm._v("Добавить номер в группу")]
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "container login_register_form_container" }, [
-      _c("h1", [_vm._v("Добавление канала в список каналов")]),
-      _vm._v(" "),
-      _c("div", [_vm._v("\n            Список технологий\n        ")]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.channel_technology,
-              expression: "channel_technology"
-            }
-          ],
-          on: {
-            change: function($event) {
-              var $$selectedVal = Array.prototype.filter
-                .call($event.target.options, function(o) {
-                  return o.selected
-                })
-                .map(function(o) {
-                  var val = "_value" in o ? o._value : o.value
-                  return val
-                })
-              _vm.channel_technology = $event.target.multiple
-                ? $$selectedVal
-                : $$selectedVal[0]
-            }
-          }
-        },
-        _vm._l(_vm.technologies, function(tech) {
-          return _c("option", { domProps: { value: tech.id } }, [
-            _vm._v(_vm._s(tech.techno))
-          ])
-        }),
-        0
-      ),
-      _vm._v(" "),
-      _c("div", [
-        _vm._v("Добавьте название канала в формате @channel поштучно")
-      ]),
-      _vm._v(" "),
-      _c("textarea", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.channel,
-            expression: "channel"
-          }
-        ],
-        staticClass: "form-control textarea_admin",
-        attrs: { rows: "1", name: "text", placeholder: "название канала" },
-        domProps: { value: _vm.channel },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.channel = $event.target.value
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c("div", [
-        _c(
-          "button",
-          {
-            staticClass:
-              "btn btn-dark btn-block procedure_button textarea_admin",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                return _vm.add_channel_tech()
-              }
-            }
-          },
-          [_vm._v("Добавить канал")]
         )
       ])
     ]),
@@ -40564,12 +40394,11 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-6" }, [
-        _c("div", [_vm._v("Выберите номер телефона")]),
+      _c("div", { staticClass: "col-7" }, [
+        _c("div", [_vm._v("Номер телефона")]),
         _vm._v(" "),
-        _c(
-          "select",
-          {
+        _c("div", [
+          _c("input", {
             directives: [
               {
                 name: "model",
@@ -40578,27 +40407,24 @@ var render = function() {
                 expression: "phone"
               }
             ],
+            attrs: { placeholder: "Номер телефона" },
+            domProps: { value: _vm.phone },
             on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.phone = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.phone = $event.target.value
               }
             }
-          },
-          _vm._l(_vm.telegram_phones, function(tel_phone) {
-            return _c("option", [_vm._v(_vm._s(tel_phone.phone))])
-          }),
-          0
-        ),
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "menu_row" }, [
+          _vm._v(
+            "\n                Когда авторизуешся здесь, то настройки прокси сохраняются ( таблица phone_telegram) и уже через трейт их по новой вводить не надо а только здесь\n            "
+          )
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "menu_row" }, [
           _vm._v("\n                Код авторизации\n                "),
@@ -40620,6 +40446,116 @@ var render = function() {
                     return
                   }
                   _vm.auth_code = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "menu_row" }, [
+          _vm._v(
+            "\n               Прокси адрес например 94.158.189.181\n                "
+          ),
+          _c("div", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.proxy_adres,
+                  expression: "proxy_adres"
+                }
+              ],
+              attrs: { placeholder: "прокси адрес" },
+              domProps: { value: _vm.proxy_adres },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.proxy_adres = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "menu_row" }, [
+          _vm._v("\n                Порт например 64299\n                "),
+          _c("div", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.proxy_port,
+                  expression: "proxy_port"
+                }
+              ],
+              attrs: { placeholder: "порт" },
+              domProps: { value: _vm.proxy_port },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.proxy_port = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "menu_row" }, [
+          _vm._v(
+            "\n                Username например wwGRG5Nm\n                "
+          ),
+          _c("div", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.proxy_username,
+                  expression: "proxy_username"
+                }
+              ],
+              attrs: { placeholder: "Username" },
+              domProps: { value: _vm.proxy_username },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.proxy_username = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "menu_row" }, [
+          _vm._v(
+            "\n                Password например 18z5j2Kt\n                "
+          ),
+          _c("div", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.proxy_password,
+                  expression: "proxy_password"
+                }
+              ],
+              attrs: { placeholder: "18z5j2Kt" },
+              domProps: { value: _vm.proxy_password },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.proxy_password = $event.target.value
                 }
               }
             })
@@ -40694,7 +40630,7 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-6" }, [
+      _c("div", { staticClass: "col-5" }, [
         _c("div", [
           _c(
             "button",
@@ -40731,15 +40667,15 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn btn-info textarea_admin",
+              staticClass: "btn btn-warning textarea_admin",
               attrs: { type: "button" },
               on: {
                 click: function($event) {
-                  return _vm.get_users()
+                  return _vm.get_users_for_inv()
                 }
               }
             },
-            [_vm._v("Получить пользователей канала")]
+            [_vm._v("Получить пользователей канала для инвайта")]
           )
         ]),
         _vm._v(" "),
@@ -40747,15 +40683,15 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn btn-info textarea_admin",
+              staticClass: "btn btn-warning textarea_admin",
               attrs: { type: "button" },
               on: {
                 click: function($event) {
-                  return _vm.get_random_users()
+                  return _vm.get_random_users_for_inv()
                 }
               }
             },
-            [_vm._v("Получить случайных пользователей канала")]
+            [_vm._v("Получить случайных пользователей канала для инвайта")]
           )
         ]),
         _vm._v(" "),
@@ -40763,17 +40699,17 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn btn-info textarea_admin",
+              staticClass: "btn btn-warning textarea_admin",
               attrs: { type: "button" },
               on: {
                 click: function($event) {
-                  return _vm.delete_NO_users()
+                  return _vm.delete_NO_users_for_inv()
                 }
               }
             },
             [
               _vm._v(
-                "УБрать всех юзеров которым невозможно отправить сообщение . С NO в бд "
+                "УБрать всех юзеров которым невозможно отправить сообщение . С NO в бд для инвайта"
               )
             ]
           )
@@ -40818,7 +40754,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "col-12" }, [
           _vm._v(
-            "\n                    Номер телефона использую Bremen. Выбирать ничего не надо. Менять его в коде. Просто нажимаешь на кнопку.\n                "
+            "\n                    Номер телефона использую свой. Выбирать ничего не надо. Менять его в коде. Просто нажимаешь на кнопку.\n                "
           )
         ]),
         _vm._v(" "),
@@ -41007,7 +40943,7 @@ var render = function() {
         _c(
           "button",
           {
-            staticClass: "col-2 btn btn-lg btn-outline-dark register_button",
+            staticClass: "col btn btn-lg btn-outline-dark register_button",
             attrs: { type: "button" },
             on: {
               click: function($event) {
@@ -41021,21 +40957,7 @@ var render = function() {
         _c(
           "button",
           {
-            staticClass: "col-2 btn btn-lg btn-outline-dark register_button",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                return _vm.go_send_message()
-              }
-            }
-          },
-          [_vm._v("Отправка сообщений")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "col-2 btn btn-lg btn-outline-dark register_button",
+            staticClass: "col btn btn-lg btn-outline-dark register_button",
             attrs: { type: "button" },
             on: {
               click: function($event) {
@@ -41043,110 +40965,22 @@ var render = function() {
               }
             }
           },
-          [_vm._v("Админка. Редактирование")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "col-2 btn btn-lg btn-outline-dark register_button",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                return _vm.go_search_telegram()
-              }
-            }
-          },
-          [_vm._v("Поиск в телеграм")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "col-2 btn btn-lg btn-outline-dark register_button",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                return _vm.go_to_processing()
-              }
-            }
-          },
-          [_vm._v("Обработка")]
+          [_vm._v("Админка")]
         ),
         _vm._v(" "),
         _c(
           "button",
           {
             staticClass:
-              "col-2 btn btn-lg btn-outline-dark register_button vk_butt",
+              "col btn btn-lg btn-outline-dark register_button vk_butt",
             attrs: { type: "button" },
             on: {
               click: function($event) {
-                return _vm.go_to_vk()
+                return _vm.go_to_telegram()
               }
             }
           },
-          [_vm._v("vk и отправка в телеграм")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass:
-              "col-2 btn btn-lg btn-outline-dark register_button vk_butt",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                return _vm.go_to_vk_send()
-              }
-            }
-          },
-          [_vm._v("Рассылка ВК и телега")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass:
-              "col-2 btn btn-lg btn-outline-dark register_button vk_butt",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                return _vm.go_to_vk_mes()
-              }
-            }
-          },
-          [_vm._v("сообщения ВК")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass:
-              "col-2 btn btn-lg btn-outline-dark register_button vk_butt",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                return _vm.go_to_vk_hand()
-              }
-            }
-          },
-          [_vm._v("сообщения ВК вручную")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass:
-              "col-2 btn btn-lg btn-outline-dark register_button vk_butt",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                return _vm.go_to_content()
-              }
-            }
-          },
-          [_vm._v("контент телеграм из ВК")]
+          [_vm._v("рассылка по телеграмм")]
         )
       ])
     ])
@@ -42099,6 +41933,194 @@ var render = function() {
   ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TelegramSendingComponent.vue?vue&type=template&id=5988af4f&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TelegramSendingComponent.vue?vue&type=template&id=5988af4f& ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", [
+      _vm._v(
+        "\n        1. менять значения в таблице telegram_invites, значения введенные здесь не сохраняются\n    "
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-info textarea_admin",
+        attrs: { type: "button" },
+        on: {
+          click: function($event) {
+            return _vm.back()
+          }
+        }
+      },
+      [_vm._v("На главную")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-secondary start_work",
+        attrs: { type: "button" },
+        on: {
+          click: function($event) {
+            return _vm.invite_users()
+          }
+        }
+      },
+      [_vm._v("Начать работу")]
+    ),
+    _vm._v(" "),
+    _c("table", { staticClass: "table" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.global_arr, function(group, index) {
+          return _c("tr", [
+            _c("td", [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: group.group,
+                    expression: "group.group"
+                  }
+                ],
+                staticClass: "form-control textarea_admin do_col_group",
+                attrs: { rows: "2", name: "text" },
+                domProps: { value: group.group },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(group, "group", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: group.number,
+                    expression: "group.number"
+                  }
+                ],
+                staticClass: "form-control textarea_admin do_col_group",
+                attrs: { rows: "2", name: "text" },
+                domProps: { value: group.number },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(group, "number", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(group.loc_counter))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(group.count_user))]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: group.do,
+                    expression: "group.do"
+                  }
+                ],
+                staticClass: "form-check-input check_do",
+                attrs: { type: "checkbox", value: "", id: "flexCheckDefault" },
+                domProps: {
+                  checked: Array.isArray(group.do)
+                    ? _vm._i(group.do, "") > -1
+                    : group.do
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = group.do,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && _vm.$set(group, "do", $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            group,
+                            "do",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(group, "do", $$c)
+                    }
+                  }
+                }
+              })
+            ])
+          ])
+        }),
+        0
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticClass: "do_col_group", attrs: { scope: "col" } }, [
+          _vm._v("Группа")
+        ]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Номер")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Сдел")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("В базе")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "check_do", attrs: { scope: "col" } }, [
+          _vm._v("V")
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -58172,6 +58194,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_VkMessageComponent__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/VkMessageComponent */ "./resources/js/components/VkMessageComponent.vue");
 /* harmony import */ var _components_VkHandComponent__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/VkHandComponent */ "./resources/js/components/VkHandComponent.vue");
 /* harmony import */ var _components_ContentComponent__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/ContentComponent */ "./resources/js/components/ContentComponent.vue");
+/* harmony import */ var _components_TelegramSendingComponent__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/TelegramSendingComponent */ "./resources/js/components/TelegramSendingComponent.vue");
 
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
@@ -58186,6 +58209,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 window.Event = new vue__WEBPACK_IMPORTED_MODULE_1___default.a();
 
 window.auth = new _auth_js__WEBPACK_IMPORTED_MODULE_5__["default"]();
+
 
 
 
@@ -58262,6 +58286,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]({
     path: '/vk_send',
     name: 'vk_send',
     component: _components_VkSendComponent__WEBPACK_IMPORTED_MODULE_17__["default"]
+  }, {
+    path: '/telegram_sending',
+    name: 'telegram_sending',
+    component: _components_TelegramSendingComponent__WEBPACK_IMPORTED_MODULE_21__["default"]
   }, {
     path: '/admin',
     name: 'admin',
@@ -59178,6 +59206,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TelegramHistory_vue_vue_type_template_id_4f264b38___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TelegramHistory_vue_vue_type_template_id_4f264b38___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/TelegramSendingComponent.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/TelegramSendingComponent.vue ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TelegramSendingComponent_vue_vue_type_template_id_5988af4f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TelegramSendingComponent.vue?vue&type=template&id=5988af4f& */ "./resources/js/components/TelegramSendingComponent.vue?vue&type=template&id=5988af4f&");
+/* harmony import */ var _TelegramSendingComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TelegramSendingComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/TelegramSendingComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TelegramSendingComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TelegramSendingComponent_vue_vue_type_template_id_5988af4f___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TelegramSendingComponent_vue_vue_type_template_id_5988af4f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/TelegramSendingComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/TelegramSendingComponent.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/TelegramSendingComponent.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TelegramSendingComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./TelegramSendingComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TelegramSendingComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TelegramSendingComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/TelegramSendingComponent.vue?vue&type=template&id=5988af4f&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/TelegramSendingComponent.vue?vue&type=template&id=5988af4f& ***!
+  \*********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TelegramSendingComponent_vue_vue_type_template_id_5988af4f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./TelegramSendingComponent.vue?vue&type=template&id=5988af4f& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TelegramSendingComponent.vue?vue&type=template&id=5988af4f&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TelegramSendingComponent_vue_vue_type_template_id_5988af4f___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TelegramSendingComponent_vue_vue_type_template_id_5988af4f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

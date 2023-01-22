@@ -28,6 +28,7 @@ import VkSendComponent from './components/VkSendComponent'
 import VkMessageComponent from "./components/VkMessageComponent";
 import VkHandComponent from "./components/VkHandComponent";
 import ContentComponent from "./components/ContentComponent";
+import TelegramSendingComponent from "./components/TelegramSendingComponent";
  // axios.defaults.baseURL = 'http://localhost:/api';
  axios.defaults.baseURL = 'http://site2.loc:/api';
 
@@ -105,6 +106,11 @@ const router = new VueRouter({
             path: '/vk_send',
             name: 'vk_send',
             component: VkSendComponent
+        },
+        {
+            path: '/telegram_sending',
+            name: 'telegram_sending',
+            component: TelegramSendingComponent
         },
         {
             path: '/admin',

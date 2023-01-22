@@ -4,14 +4,34 @@
             <button type="button" class="btn btn-info textarea_admin" v-on:click="back()" >На главную</button>
         </div>
         <div class="row">
-        <div class="col-6">
-            <div>Выберите номер телефона</div>
-            <select v-model="phone">
-                <option v-for="tel_phone in telegram_phones">{{ tel_phone.phone }}</option>
-            </select>
+        <div class="col-7">
+            <div>Номер телефона</div>
+            <div><input v-model="phone" placeholder="Номер телефона"></div>
+<!--            <select v-model="phone">-->
+<!--                <option v-for="tel_phone in telegram_phones">{{ tel_phone.phone }}</option>-->
+<!--            </select>-->
+            <div class="menu_row">
+                Когда авторизуешся здесь, то настройки прокси сохраняются ( таблица phone_telegram) и уже через трейт их по новой вводить не надо а только здесь
+            </div>
             <div class="menu_row">
                 Код авторизации
                 <div><input v-model="auth_code" placeholder="Код авторизации"></div>
+            </div>
+            <div class="menu_row">
+               Прокси адрес например 94.158.189.181
+                <div><input v-model="proxy_adres" placeholder="прокси адрес"></div>
+            </div>
+            <div class="menu_row">
+                Порт например 64299
+                <div><input v-model="proxy_port" placeholder="порт"></div>
+            </div>
+            <div class="menu_row">
+                Username например wwGRG5Nm
+                <div><input v-model="proxy_username" placeholder="Username"></div>
+            </div>
+            <div class="menu_row">
+                Password например 18z5j2Kt
+                <div><input v-model="proxy_password" placeholder="18z5j2Kt"></div>
             </div>
             <div class="menu_row">
                 Ссылка на канал типа @channel
@@ -24,22 +44,35 @@
                 <option v-for="tech in technologies" :value="tech.id">{{ tech.techno }}</option>
             </select>
         </div>
-        <div class="col-6">
+        <div class="col-5">
             <div>
         <button type="button" class="btn btn-info textarea_admin" v-on:click="autorization()" >Авторизация в телеграм</button>
         </div>
             <div>
             <button type="button" class="btn btn-info textarea_admin" v-on:click="send_code()" >Отправить код</button>
             </div>
-                <div>
-        <button type="button" class="btn btn-info textarea_admin" v-on:click="get_users()" >Получить пользователей канала</button>
-                </div>
-                    <div>
-        <button type="button" class="btn btn-info textarea_admin" v-on:click="get_random_users()" >Получить случайных пользователей канала</button>
-                    </div>
+<!--                <div>-->
+<!--        <button type="button" class="btn btn-info textarea_admin" v-on:click="get_users()" >Получить пользователей канала</button>-->
+<!--                </div>-->
+<!--                    <div>-->
+<!--        <button type="button" class="btn btn-info textarea_admin" v-on:click="get_random_users()" >Получить случайных пользователей канала</button>-->
+<!--                    </div>-->
+<!--            <div>-->
+<!--                <button type="button" class="btn btn-info textarea_admin" v-on:click="delete_NO_users()" >УБрать всех юзеров которым невозможно отправить сообщение . С NO в бд </button>-->
+<!--            </div>-->
+<!--            <div v-if="help1">желтые кнопки используются для пополнения базы инвайта. ищем пользователей в откыты ата</div>-->
+<!--            <button type="button" class="btn btn-secondary textarea_admin" v-on:click="help1_show()" >Помощь по инвайту</button>-->
+
             <div>
-                <button type="button" class="btn btn-info textarea_admin" v-on:click="delete_NO_users()" >УБрать всех юзеров которым невозможно отправить сообщение . С NO в бд </button>
+            <button type="button" class="btn btn-warning textarea_admin" v-on:click="get_users_for_inv()" >Получить пользователей канала для инвайта</button>
             </div>
+            <div>
+                <button type="button" class="btn btn-warning textarea_admin" v-on:click="get_random_users_for_inv()" >Получить случайных пользователей канала для инвайта</button>
+            </div>
+            <div>
+                <button type="button" class="btn btn-warning textarea_admin" v-on:click="delete_NO_users_for_inv()" >УБрать всех юзеров которым невозможно отправить сообщение . С NO в бд для инвайта</button>
+            </div>
+
 <!--            <div>-->
 <!--                <button type="button" class="btn btn-info textarea_admin" v-on:click="test()" >Пригласить пользователей в группу </button>-->
 <!--            </div>-->
@@ -58,7 +91,7 @@
                     <button type="button" class="btn btn-success textarea_admin" v-on:click="pre_dotekanie(channels_name)" >Скрипт дотекания</button>
                 </div>
                 <div class="col-12">
-                    Номер телефона использую Bremen. Выбирать ничего не надо. Менять его в коде. Просто нажимаешь на кнопку.
+                    Номер телефона использую свой. Выбирать ничего не надо. Менять его в коде. Просто нажимаешь на кнопку.
                 </div>
                 <div class="col-12">
                     <li v-for="(item,i) in channels_name" :key="item.id"> {{ item.channel }} {{ item.technology_name }} {{ item.numb }}</li>
@@ -84,7 +117,13 @@ export default {
             flag:0,
             dot_counter:0,
             dot_res_arr:[],
-            channels_name:[]
+            channels_name:[],
+            help1:false,
+
+            proxy_adres:'',
+            proxy_port:'',
+            proxy_username:'',
+            proxy_password:''
         }
     },
     mounted() {
@@ -115,6 +154,10 @@ export default {
                     },
                 )
         },
+        help1_show()
+        {
+            this.help1=!this.help1
+        },
         back()
         {
             Vue.router.push({name:'main'});
@@ -142,21 +185,22 @@ export default {
         {
             axios
                 .post('/dotekanie',{
-                    phone:"+17015104126",
+                    phone:"+375298684190",
                     counter:this.dot_counter,
                 })
                 .then(({ data }) => {
                     if (data == 'done') {
                         alert('Дотекание окончено')
-                    } else if (data < 10) {
-                        console.log(typeof data);
-                        console.log(data)
+                    } else if (data < 100) {
+
                         this.channels_name[this.dot_counter]['numb']=(this.channels_name[this.dot_counter]['numb'])+(data);
                         this.dot_counter++;
+
+                        console.log(this.dot_counter);
+                        console.log(this.channels_name)
                        this.dotekanie();
                     } else {
-                        console.log(typeof data);
-                        console.log(data)
+
                         this.channels_name[this.dot_counter]['numb']=(this.channels_name[this.dot_counter]['numb'])+(data);
                        this.dotekanie();
                     }
@@ -170,6 +214,43 @@ export default {
                 .post('/send_message',{
                     phone:this.phone,
                 })
+        },
+        get_users_for_inv()
+        {
+            axios
+                .post('/get_users_for_inv',{
+                    phone:this.phone,
+                    channel:this.channel,
+                    technology:this.technology,
+                })
+                .then(({ data }) => (
+                        alert(data)
+                    ),
+                )
+        },
+        get_random_users_for_inv()
+        {
+            axios
+                .post('/get_random_users_for_inv',{
+                    phone:this.phone,
+                    channel:this.channel,
+                    technology:this.technology,
+                })
+                .then(({ data }) => (
+                        console.log(data),
+                            this.get_random_users()
+                    ),
+                )
+        },
+        delete_NO_users_for_inv()
+        {
+            axios
+                .post('/delete_NO_users_for_inv',{
+                })
+                .then(({ data }) => {
+                        alert(data)
+                    },
+                )
         },
         get_users()
         {
@@ -203,7 +284,11 @@ export default {
             axios
                 .post('/send_code',{
                     phone:this.phone,
-                    auth_code:this.auth_code
+                    auth_code:this.auth_code,
+                    proxy_adres:this.proxy_adres,
+                    proxy_port:this.proxy_port,
+                    proxy_username:this.proxy_username,
+                    proxy_password:this.proxy_password
                 })
                 .then(({ data }) => (
                         alert(data)
@@ -214,7 +299,11 @@ export default {
         {
             axios
                 .post('/autorization',{
-                    phone:this.phone
+                    phone:this.phone,
+                    proxy_adres:this.proxy_adres,
+                    proxy_port:this.proxy_port,
+                    proxy_username:this.proxy_username,
+                    proxy_password:this.proxy_password
                 })
                 .then(({ data }) => (
                         alert(data)
