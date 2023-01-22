@@ -58225,8 +58225,9 @@ window.auth = new _auth_js__WEBPACK_IMPORTED_MODULE_5__["default"]();
 
 
  // axios.defaults.baseURL = 'http://localhost:/api';
+//axios.defaults.baseURL = 'http://site2.loc:/api';
 
-axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.baseURL = 'http://site2.loc:/api';
+axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.baseURL = 'https://eisbrecher-go.ru:/api';
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]({
   mode: 'history',
   routes: [{

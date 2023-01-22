@@ -30,7 +30,8 @@ import VkHandComponent from "./components/VkHandComponent";
 import ContentComponent from "./components/ContentComponent";
 import TelegramSendingComponent from "./components/TelegramSendingComponent";
  // axios.defaults.baseURL = 'http://localhost:/api';
- axios.defaults.baseURL = 'http://site2.loc:/api';
+ //axios.defaults.baseURL = 'http://site2.loc:/api';
+ axios.defaults.baseURL = 'https://eisbrecher-go.ru:/api';
 
 const router = new VueRouter({
 
