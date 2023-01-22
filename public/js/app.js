@@ -2148,6 +2148,9 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/add_old_users', {
         add_old_users: this.add_old_users_var,
         technology_id: this.channel_technology
+      }).then(function (_ref7) {
+        var data = _ref7.data;
+        return alert(data);
       });
     },
     save_new_tel_user: function save_new_tel_user() {
@@ -2155,14 +2158,14 @@ __webpack_require__.r(__webpack_exports__);
         new_user_telephone: this.new_user_telephone,
         api_id: this.api_id,
         api_hash: this.api_hash
-      }).then(function (_ref7) {
-        var data = _ref7.data;
+      }).then(function (_ref8) {
+        var data = _ref8.data;
         return alert(data);
       });
     },
     get_technology: function get_technology(inp) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_technology', {}).then(function (_ref8) {
-        var data = _ref8.data;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_technology', {}).then(function (_ref9) {
+        var data = _ref9.data;
         return data.forEach(function (entry) {
           inp.push({
             id: entry.id,
@@ -2176,8 +2179,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_count_technology', {
         technology: this.technology
-      }).then(function (_ref9) {
-        var data = _ref9.data;
+      }).then(function (_ref10) {
+        var data = _ref10.data;
         return _this3.count_technology = data;
       });
     },
@@ -2190,8 +2193,8 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/save_technology_text', {
         technology: this.technology,
         technology_text: this.text_technology
-      }).then(function (_ref10) {
-        var data = _ref10.data;
+      }).then(function (_ref11) {
+        var data = _ref11.data;
         return alert(data);
       });
     },
@@ -2200,8 +2203,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_technology_text', {
         technology: this.technology
-      }).then(function (_ref11) {
-        var data = _ref11.data;
+      }).then(function (_ref12) {
+        var data = _ref12.data;
         return _this4.text_technology = data;
       });
       this.get_count_technology();
@@ -2210,8 +2213,8 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/new_save_technology_text', {
         new_technology: this.new_technology,
         new_text_technology: this.new_text_technology
-      }).then(function (_ref12) {
-        var data = _ref12.data;
+      }).then(function (_ref13) {
+        var data = _ref13.data;
         return alert(data);
       });
     }

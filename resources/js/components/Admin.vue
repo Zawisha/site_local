@@ -270,6 +270,10 @@ export default {
                     add_old_users:this.add_old_users_var,
                     technology_id:this.channel_technology
                 })
+                .then(({ data }) => (
+                        alert(data)
+                    ),
+                )
         },
         save_new_tel_user()
         {
