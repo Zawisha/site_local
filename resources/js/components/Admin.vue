@@ -265,15 +265,24 @@ export default {
         },
         add_old_users()
         {
-            axios
-                .post('/add_old_users',{
-                    add_old_users:this.add_old_users_var,
-                    technology_id:this.channel_technology
-                })
-                .then(({ data }) => (
-                        alert(data)
-                    ),
-                )
+            if((this.channel_technology!=='')&&(this.add_old_users_var!==''))
+            {
+                axios
+                    .post('/add_old_users',{
+                        add_old_users:this.add_old_users_var,
+                        technology_id:this.channel_technology
+                    })
+                    .then(({ data }) => (
+                            alert(data)
+                        ),
+                    )
+
+            }
+            else
+            {
+                alert('Внимательнее')
+            }
+
         },
         save_new_tel_user()
         {

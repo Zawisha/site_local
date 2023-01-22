@@ -2145,13 +2145,17 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     add_old_users: function add_old_users() {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/add_old_users', {
-        add_old_users: this.add_old_users_var,
-        technology_id: this.channel_technology
-      }).then(function (_ref7) {
-        var data = _ref7.data;
-        return alert(data);
-      });
+      if (this.channel_technology !== '' && this.add_old_users_var !== '') {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/add_old_users', {
+          add_old_users: this.add_old_users_var,
+          technology_id: this.channel_technology
+        }).then(function (_ref7) {
+          var data = _ref7.data;
+          return alert(data);
+        });
+      } else {
+        alert('Внимательнее');
+      }
     },
     save_new_tel_user: function save_new_tel_user() {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/save_new_tel_user', {
