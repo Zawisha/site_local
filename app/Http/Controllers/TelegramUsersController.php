@@ -319,27 +319,25 @@ class TelegramUsersController extends Controller
     public function add_old_users(Request $request)
     {
         $users_list = $request->input('add_old_users');
+        $technology_id = $request->input('technology_id');
         preg_match_all('#@.+#', $users_list,  $matches);
-
+        $counter=0;
         foreach ($matches[0] as $user)
         {
             $user = substr($user, 1);
-                $user_in_db=GeneralDev::where('username','=',$user)->get();
+                $user_in_db=UserForInvite::where('username','=',$user)->get();
                if($user_in_db->isEmpty())
                {
-               $us= GeneralDev::create([
+               $us= UserForInvite::create([
                        'user_id' => '0',
                        'username' => $user,
-                       'technology_id' => '0',
-                       'write' => 1
+                       'technology_id' => $technology_id,
+                       'invited' => 0
                    ]);
-               }
-               else
-               {
-                   GeneralDev::where('username', '=', $user)->update(['write' => 1]);
+               $counter++;
                }
         }
-        return "ok";
+        return $counter;
     }
 
     public function invite_users(Request $request)

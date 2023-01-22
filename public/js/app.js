@@ -2024,6 +2024,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2141,7 +2146,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     add_old_users: function add_old_users() {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/add_old_users', {
-        add_old_users: this.add_old_users_var
+        add_old_users: this.add_old_users_var,
+        technology_id: this.channel_technology
       });
     },
     save_new_tel_user: function save_new_tel_user() {
@@ -40204,6 +40210,92 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "container login_register_form_container" }, [
+      _c("h1", [_vm._v("Добавление старых пользователей")]),
+      _vm._v(" "),
+      _c("div", [
+        _vm._v("Введите username телеги старых пользователя в колонку")
+      ]),
+      _vm._v(" "),
+      _c("textarea", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.add_old_users_var,
+            expression: "add_old_users_var"
+          }
+        ],
+        staticClass: "form-control textarea_admin",
+        attrs: {
+          rows: "10",
+          name: "text",
+          placeholder: "Список пользователей в колонку"
+        },
+        domProps: { value: _vm.add_old_users_var },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.add_old_users_var = $event.target.value
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("div", [
+        _c(
+          "button",
+          {
+            staticClass:
+              "btn btn-dark btn-block procedure_button textarea_admin",
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                return _vm.add_old_users()
+              }
+            }
+          },
+          [_vm._v("Добавить пользователей")]
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.channel_technology,
+              expression: "channel_technology"
+            }
+          ],
+          on: {
+            change: function($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function(o) {
+                  return o.selected
+                })
+                .map(function(o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.channel_technology = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            }
+          }
+        },
+        _vm._l(_vm.technologies, function(tech) {
+          return _c("option", { domProps: { value: tech.id } }, [
+            _vm._v(_vm._s(tech.techno))
+          ])
+        }),
+        0
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "container login_register_form_container" }, [
       _c("h1", [_vm._v("Выделение id из username. В формате @username")]),
       _vm._v(" "),
       _c("div", [
@@ -58225,9 +58317,9 @@ window.auth = new _auth_js__WEBPACK_IMPORTED_MODULE_5__["default"]();
 
 
  // axios.defaults.baseURL = 'http://localhost:/api';
-//axios.defaults.baseURL = 'http://site2.loc:/api';
 
-axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.baseURL = 'https://eisbrecher-go.ru:/api';
+axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.baseURL = 'http://site2.loc:/api'; //  axios.defaults.baseURL = 'https://eisbrecher-go.ru:/api';
+
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]({
   mode: 'history',
   routes: [{

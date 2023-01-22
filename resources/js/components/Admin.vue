@@ -41,14 +41,18 @@
                 <button type="button" class="btn btn-warning btn-block procedure_button textarea_admin" v-on:click="save_new_tel_user()" >Сохранить пользователя</button>
             </div>
         </div>
-<!--        <div class="container login_register_form_container">-->
-<!--            <h1>Добавление старых пользователей</h1>-->
-<!--            <div>Введите username телеги старых пользователя в колонку</div>-->
-<!--            <textarea class="form-control textarea_admin" rows="10"  name="text" v-model="add_old_users_var" placeholder="Список пользователей в колонку"></textarea>-->
-<!--            <div>-->
-<!--                <button type="button" class="btn btn-dark btn-block procedure_button textarea_admin" v-on:click="add_old_users()" >Добавить пользователей</button>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="container login_register_form_container">
+            <h1>Добавление старых пользователей</h1>
+            <div>Введите username телеги старых пользователя в колонку</div>
+            <textarea class="form-control textarea_admin" rows="10"  name="text" v-model="add_old_users_var" placeholder="Список пользователей в колонку"></textarea>
+            <div>
+                <button type="button" class="btn btn-dark btn-block procedure_button textarea_admin" v-on:click="add_old_users()" >Добавить пользователей</button>
+            </div>
+            <!--                Список технологий-->
+                        <select v-model="channel_technology">
+                            <option v-for="tech in technologies" :value="tech.id">{{ tech.techno }}</option>
+                        </select>
+        </div>
 
 
 <!--        <div class="container login_register_form_container">-->
@@ -109,6 +113,7 @@
                 <button type="button" class="btn btn-dark btn-block procedure_button textarea_admin" v-on:click="get_ids_users()" >Получить id</button>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -263,6 +268,7 @@ export default {
             axios
                 .post('/add_old_users',{
                     add_old_users:this.add_old_users_var,
+                    technology_id:this.channel_technology
                 })
         },
         save_new_tel_user()
