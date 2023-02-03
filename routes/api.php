@@ -49,6 +49,7 @@ Route::post('/get_groups', [\App\Http\Controllers\TelegramAdminController::class
 Route::post('/add_phone_to_group', [\App\Http\Controllers\TelegramAdminController::class, 'add_phone_to_group']);
 Route::post('/get_group_list', [\App\Http\Controllers\TelegramAdminController::class, 'get_group_list']);
 Route::post('/delete_number', [\App\Http\Controllers\TelegramAdminController::class, 'delete_number']);
+Route::post('/check_enter_group', [\App\Http\Controllers\TelegramUsersController::class, 'check_enter_group']);
 Route::post('/send_message_to_group', [\App\Http\Controllers\TelegramMessageController::class, 'send_message_to_group']);
 Route::post('/add_channel', [\App\Http\Controllers\TelegramAdminController::class, 'add_channel']);
 Route::post('/get_channels', [\App\Http\Controllers\TelegramUsersController::class, 'get_channels']);

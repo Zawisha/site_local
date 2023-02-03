@@ -2029,6 +2029,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2052,7 +2061,9 @@ __webpack_require__.r(__webpack_exports__);
       phone_list: [],
       group_to_add: '',
       group_list_old: [],
-      username_to_id: ''
+      username_to_id: '',
+      phone_to_check: '',
+      group_to_check: ''
     };
   },
   mounted: function mounted() {
@@ -2062,12 +2073,21 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {},
   methods: {
+    check_enter_group: function check_enter_group() {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/check_enter_group', {
+        phone: this.phone_to_check,
+        group: this.group_to_check
+      }).then(function (_ref) {
+        var data = _ref.data;
+        return alert(data);
+      });
+    },
     get_ids_users: function get_ids_users() {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_ids_users', {
         phone: "+17015104126",
         username_to_id: this.username_to_id
-      }).then(function (_ref) {
-        var data = _ref.data;
+      }).then(function (_ref2) {
+        var data = _ref2.data;
         return alert(data);
       });
     },
@@ -2082,8 +2102,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/delete_number', {
         phone: number
-      }).then(function (_ref2) {
-        var data = _ref2.data;
+      }).then(function (_ref3) {
+        var data = _ref3.data;
         return _this.empty_arr();
       });
     },
@@ -2094,8 +2114,8 @@ __webpack_require__.r(__webpack_exports__);
     get_group_list: function get_group_list(inp) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_group_list', {
         group_id: this.group_to_add
-      }).then(function (_ref3) {
-        var data = _ref3.data;
+      }).then(function (_ref4) {
+        var data = _ref4.data;
         return data.forEach(function (entry) {
           inp.push({
             id: entry.id,
@@ -2105,8 +2125,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     get_groups: function get_groups(inp) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_groups', {}).then(function (_ref4) {
-        var data = _ref4.data;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_groups', {}).then(function (_ref5) {
+        var data = _ref5.data;
         return data.forEach(function (entry) {
           inp.push({
             id: entry.id,
@@ -2116,8 +2136,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     get_phones: function get_phones(inp) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_phones', {}).then(function (_ref5) {
-        var data = _ref5.data;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_phones', {}).then(function (_ref6) {
+        var data = _ref6.data;
         return data.forEach(function (entry) {
           inp.push({
             id: entry.id,
@@ -2134,8 +2154,8 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/add_phone_to_group', {
         phone: this.phone_to_group,
         group_id: this.group_to_add
-      }).then(function (_ref6) {
-        var data = _ref6.data;
+      }).then(function (_ref7) {
+        var data = _ref7.data;
         return _this2.empty_arr();
       });
     },
@@ -2149,8 +2169,8 @@ __webpack_require__.r(__webpack_exports__);
         axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/add_old_users', {
           add_old_users: this.add_old_users_var,
           technology_id: this.channel_technology
-        }).then(function (_ref7) {
-          var data = _ref7.data;
+        }).then(function (_ref8) {
+          var data = _ref8.data;
           return alert(data);
         });
       } else {
@@ -2162,14 +2182,14 @@ __webpack_require__.r(__webpack_exports__);
         new_user_telephone: this.new_user_telephone,
         api_id: this.api_id,
         api_hash: this.api_hash
-      }).then(function (_ref8) {
-        var data = _ref8.data;
+      }).then(function (_ref9) {
+        var data = _ref9.data;
         return alert(data);
       });
     },
     get_technology: function get_technology(inp) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_technology', {}).then(function (_ref9) {
-        var data = _ref9.data;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_technology', {}).then(function (_ref10) {
+        var data = _ref10.data;
         return data.forEach(function (entry) {
           inp.push({
             id: entry.id,
@@ -2183,8 +2203,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_count_technology', {
         technology: this.technology
-      }).then(function (_ref10) {
-        var data = _ref10.data;
+      }).then(function (_ref11) {
+        var data = _ref11.data;
         return _this3.count_technology = data;
       });
     },
@@ -2197,8 +2217,8 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/save_technology_text', {
         technology: this.technology,
         technology_text: this.text_technology
-      }).then(function (_ref11) {
-        var data = _ref11.data;
+      }).then(function (_ref12) {
+        var data = _ref12.data;
         return alert(data);
       });
     },
@@ -2207,8 +2227,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/get_technology_text', {
         technology: this.technology
-      }).then(function (_ref12) {
-        var data = _ref12.data;
+      }).then(function (_ref13) {
+        var data = _ref13.data;
         return _this4.text_technology = data;
       });
       this.get_count_technology();
@@ -2217,8 +2237,8 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/new_save_technology_text', {
         new_technology: this.new_technology,
         new_text_technology: this.new_text_technology
-      }).then(function (_ref13) {
-        var data = _ref13.data;
+      }).then(function (_ref14) {
+        var data = _ref14.data;
         return alert(data);
       });
     }
@@ -40343,6 +40363,73 @@ var render = function() {
           [_vm._v("Получить id")]
         )
       ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "container login_register_form_container" }, [
+      _c("h1", [
+        _vm._v("Вступить в группу, оно же проверка пользователя на бан")
+      ]),
+      _vm._v(" "),
+      _c("div", [
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.phone_to_check,
+              expression: "phone_to_check"
+            }
+          ],
+          staticClass: "form-control textarea_admin",
+          attrs: { rows: "1", name: "text", placeholder: "номер телефона" },
+          domProps: { value: _vm.phone_to_check },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.phone_to_check = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.group_to_check,
+              expression: "group_to_check"
+            }
+          ],
+          staticClass: "form-control textarea_admin",
+          attrs: { rows: "1", name: "text", placeholder: "чат" },
+          domProps: { value: _vm.group_to_check },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.group_to_check = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass:
+              "btn btn-dark btn-block procedure_button textarea_admin",
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                return _vm.check_enter_group()
+              }
+            }
+          },
+          [_vm._v("Вступить/проверить")]
+        )
+      ])
     ])
   ])
 }
@@ -58324,7 +58411,7 @@ window.auth = new _auth_js__WEBPACK_IMPORTED_MODULE_5__["default"]();
 
 
  // axios.defaults.baseURL = 'http://localhost:/api';
-//axios.defaults.baseURL = 'http://site2.loc:/api';
+// axios.defaults.baseURL = 'http://site2.loc:/api';
 
 axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.baseURL = 'https://eisbrecher-go.ru:/api';
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]({

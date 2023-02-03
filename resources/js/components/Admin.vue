@@ -114,6 +114,15 @@
             </div>
         </div>
 
+        <div class="container login_register_form_container">
+            <h1>Вступить в группу, оно же проверка пользователя на бан</h1>
+            <div>
+                <textarea class="form-control textarea_admin" rows="1"  name="text" v-model="phone_to_check" placeholder="номер телефона"></textarea>
+                <textarea class="form-control textarea_admin" rows="1"  name="text" v-model="group_to_check" placeholder="чат"></textarea>
+                <button type="button" class="btn btn-dark btn-block procedure_button textarea_admin" v-on:click="check_enter_group()" >Вступить/проверить</button>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -142,7 +151,9 @@ export default {
             phone_list:[],
             group_to_add:'',
             group_list_old:[],
-            username_to_id:''
+            username_to_id:'',
+            phone_to_check:'',
+            group_to_check:''
         }
     },
     mounted() {
@@ -153,6 +164,18 @@ export default {
     created() {
     },
     methods: {
+        check_enter_group()
+        {
+            axios
+                .post('/check_enter_group',{
+                    phone:this.phone_to_check,
+                    group:this.group_to_check
+                })
+                .then(({ data }) => (
+                        alert(data)
+                    ),
+                )
+        },
         get_ids_users()
         {
             axios

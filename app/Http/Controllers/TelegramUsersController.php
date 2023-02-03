@@ -340,6 +340,16 @@ class TelegramUsersController extends Controller
         return $counter;
     }
 
+    public function check_enter_group(Request $request)
+    {
+        $phone = $request->input('phone');
+        $group = $request->input('group');
+        $MadelineProto = $this->madAuth($phone);
+        $channels_ChannelParticipants = $MadelineProto->channels->joinChannel(['channel' => $group]);
+        return $channels_ChannelParticipants;
+
+    }
+
     public function invite_users(Request $request)
     {
 

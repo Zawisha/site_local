@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 
 class TelegramAdminController extends Controller
 {
+
     public function get_technology_text(Request $request)
     {
         $technology = $request->input('technology');
